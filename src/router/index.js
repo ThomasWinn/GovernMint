@@ -7,6 +7,7 @@ import TodosCategoryView from '../views/TodosCategoryView'
 import DoneView from '../views/DoneView'
 import DoneCategoryView from '../views/DoneCategoryView'
 import NotFoundView from '../views/NotFoundView'
+import AddTransactionView from '../views/AddTransactionView'
 import {auth} from "@/firebaseConfig.js"
 Vue.use(VueRouter)
 
@@ -64,6 +65,14 @@ const routes = [
     name: 'Category: Completed Tasks',
     component: DoneCategoryView,
     props:true,
+    meta: { 
+      requiresAuth: true
+    },
+  },
+  {
+    path: '/addTransaction',
+    name: 'Add Transaction',
+    component: AddTransactionView,
     meta: { 
       requiresAuth: true
     },
