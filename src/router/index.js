@@ -9,6 +9,7 @@ import DoneCategoryView from '../views/DoneCategoryView'
 import NotFoundView from '../views/NotFoundView'
 import AddTransactionView from '../views/AddTransactionView'
 import OverviewView from '../views/OverviewView'
+import SummaryView from '../views/SummaryView'
 import {auth} from "@/firebaseConfig.js"
 Vue.use(VueRouter)
 
@@ -86,6 +87,15 @@ const routes = [
     name: 'Add Transaction',
     component: AddTransactionView,
     meta: { 
+      requiresAuth: true
+    },
+  },
+  {
+    path: '/summary',
+    name: 'Summary',
+    component: SummaryView,
+    props: true,
+    meta: {
       requiresAuth: true
     },
   },
