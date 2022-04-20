@@ -8,6 +8,7 @@ import DoneView from '../views/DoneView'
 import DoneCategoryView from '../views/DoneCategoryView'
 import NotFoundView from '../views/NotFoundView'
 import AddTransactionView from '../views/AddTransactionView'
+import OverviewView from '../views/OverviewView'
 import {auth} from "@/firebaseConfig.js"
 Vue.use(VueRouter)
 
@@ -16,10 +17,13 @@ const routes = [
     path: '/',
     name: 'Home',
     component: HomeView,
+    meta: {
+      hideNavbar: true
+    },
     beforeEnter: (to, from, next) => {
       // reject the navigation
       if (auth.currentUser) {
-        next('/todos')
+        next('/overview')
       } else {
         next()
       }
@@ -29,6 +33,14 @@ const routes = [
     path: '/todos',
     name: 'Tasks',
     component: TodosView,
+    meta: { 
+      requiresAuth: true
+    },
+  },
+  {
+    path: '/overview',
+    name: 'Overview',
+    component: OverviewView,
     meta: { 
       requiresAuth: true
     },

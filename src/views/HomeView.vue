@@ -1,12 +1,29 @@
 <template>
   <div class="center">
-    <h1>Welcome to Hughdan's To-Do App</h1>
-    <h3>Click the Button in the Top Left to Sign-In</h3>
+    Governmint
+    <login-button/>
   </div>
 </template>
 
 <script>
+import LoginButton from '@/components/LoginButton.vue'
 export default {
-  name: 'HomeView'
+  components: { LoginButton },
+  name: 'HomeView',
+  data: function() {
+    return {
+    }
+  },
+  firestore: function() {
+    return {
+    }
+  },
+  methods: {
+
+  }
 }
 </script>
+
+<style scoped>
+
+</style>
