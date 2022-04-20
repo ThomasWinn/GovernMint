@@ -19,7 +19,7 @@
       <!-- limit to 5 in the future -->
       <dl class="uk-description-list uk-description-list-divider" style="text-align: left;">
         <div v-for="(trans, index) in owner_transactions" :key="index">
-            <dt>{{ trans.description }}</dt>
+            <router-link :to="{name:'Transaction Detail', params:{transactionId:trans.id}}"> {{trans.description}} </router-link>
             <dd>{{ trans.category }}</dd>
             <dd>{{ trans.amount }}</dd>
             <dd>{{ trans.date }}</dd>
@@ -45,7 +45,7 @@ export default {
   },
   firestore: function() {
     return {
-      owner_transactions: db.collection('transactions').where('owner', '==', auth.currentUser.uid),
+      owner_transactions: db.collection('transactions').where('owner', '==', auth.currentUser.uid).limit(3),
       profile: db.collection('profile').where('owner', '==', auth.currentUser.uid)
     }
   },

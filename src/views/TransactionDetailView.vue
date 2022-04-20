@@ -1,7 +1,7 @@
 <template>
     <div class="center">
         <vk-notification status="success" :messages.sync="messages"></vk-notification>
-        <h1> Add Transaction </h1>
+        <h1> View/Edit Transaction </h1>
         <div class="uk-container uk-margin-top">
             <form>
                 <div class="uk-margin">
@@ -41,11 +41,11 @@
                 <div class="uk-margin">
                     <label class="uk-form-label" for="form-location">Location:</label>
                     <div class="uk-form-controls">
-                        <vue-google-autocomplete ref="location" v-model="location" id="form-location" class="uk-input uk-form-width-large" enable-geolocation v-on:placechanged="getCoordinates">
+                        <vue-google-autocomplete ref="location" v-model="location" id="form-location" class="uk-input uk-form-width-large" enable-geolocation placeholder="Start typing" v-on:placechanged="getCoordinates">
                         </vue-google-autocomplete>
                     </div>
                 </div>
-                <vk-button class="uk-margin-right" type="primary" @click="saveAndNew">Save and New</vk-button>
+                <vk-button class="uk-margin-right" type="primary" @click="saveTransaction">Save</vk-button>
                 <vk-button type="primary" @click="saveAndClose">Save and Close</vk-button>
             </form>
             <br>
@@ -72,24 +72,27 @@ import DatePicker from 'v-calendar/lib/components/date-picker.umd';
 import VueGoogleAutocomplete from "vue-google-autocomplete";
 import firebase from "firebase/app";
 export default {
+    props:["transactionId"],
     components: { CurrencyInput, DatePicker, VueGoogleAutocomplete },
     data: function() {
         return {
-            date: new Date(),
-            description: "",
-            category: "",
+            date: null,
+            description: null,
+            category: null,
             categories: false,
-            paymentType: "",
+            paymentType: null,
             paymentTypes: false,
-            location: "",
+            location: null,
             latitude: null,
             longitude: null,
-            amount: 0,
+            amount: null,
+            transactionData: false,
             messages: []
         }
     },
     firestore: function() {
         return {
+            transactionData: db.collection('transactions').doc(this.transactionId),
             categories: db.collection('categories').orderBy('name'),
             paymentTypes: db.collection('paymentTypes').orderBy('name')
         }
@@ -106,42 +109,26 @@ export default {
                     description: this.description,
                     category: this.category,
                     paymentType: this.paymentType,
-                    location: this.location,
                     coordinates: new firebase.firestore.GeoPoint(this.latitude, this.longitude),
+                    location: this.location,
                     amount: this.amount,
                     owner: auth.currentUser.uid
                 })
-                db.collection('transactions').add({
+                db.collection('transactions').doc(this.transactionId).update({
                     date: this.date,
                     description: this.description,
                     category: this.category,
                     paymentType: this.paymentType,
-                    location: this.location,
                     coordinates: new firebase.firestore.GeoPoint(this.latitude, this.longitude),
+                    location: this.location,
                     amount: this.amount,
                     owner: auth.currentUser.uid
                 })
-                this.messages.push({ message: 'Transaction Successfully Added', status: 'success', timeout: 3000 })
+                this.messages.push({ message: 'Transaction Successfully Saved', status: 'success', timeout: 3000 })
                 return true
             } else {
-                this.messages.push({ message: 'Transaction Failed: One or More Fields are Empty', status: 'danger', timeout: 3000 })
+                this.messages.push({ message: 'Save Failed: One or More Fields are Empty', status: 'danger', timeout: 3000 })
                 return false
-            }
-        },
-        saveAndNew: function() {
-            if (this.saveTransaction()) {
-                this.$nextTick(() => {
-                    this.date = ""
-                    this.description = ""
-                    this.category = ""
-                    this.paymentType = ""
-                    this.location = ""
-                    this.latitude = null
-                    this.longitude = null
-                    this.amount = 0
-                    this.$refs.location.clear()
-                    this.$refs.amount.value = 0
-                });
             }
         },
         saveAndClose: function() {
@@ -154,6 +141,22 @@ export default {
             this.latitude = addressData.latitude
             this.longitude = addressData.longitude
         }
+    },
+    watch: {
+        transactionData: function(newData) {
+            if (newData == null) {
+                this.$router.push('/404')
+            } else {
+                this.date = newData.date.toDate()
+                this.description = newData.description
+                this.category = newData.category
+                this.paymentType = newData.paymentType
+                this.location = newData.location
+                this.latitude = newData.coordinates._lat
+                this.longitude = newData.coordinates._long
+                this.amount = newData.amount
+            }
+      }
     }
 }
 </script>
