@@ -8,6 +8,7 @@ import DoneView from '../views/DoneView'
 import DoneCategoryView from '../views/DoneCategoryView'
 import NotFoundView from '../views/NotFoundView'
 import AddTransactionView from '../views/AddTransactionView'
+import TransactionDetailView from '../views/TransactionDetailView'
 import OverviewView from '../views/OverviewView'
 import SummaryView from '../views/SummaryView'
 import {auth} from "@/firebaseConfig.js"
@@ -83,10 +84,19 @@ const routes = [
     },
   },
   {
-    path: '/addTransaction',
+    path: '/add-transaction',
     name: 'Add Transaction',
     component: AddTransactionView,
     meta: { 
+      requiresAuth: true
+    },
+  },
+  {
+    path: '/transaction/:transactionId',
+    name: 'Transaction Detail',
+    component: TransactionDetailView,
+    props:true,
+    meta: {
       requiresAuth: true
     },
   },
