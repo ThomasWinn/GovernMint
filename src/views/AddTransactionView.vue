@@ -124,7 +124,7 @@ export default {
                 this.messages.push({ message: 'Transaction Successfully Added', status: 'success', timeout: 3000 })
                 return true
             } else {
-                this.messages.push({ message: 'Transaction Failed: One or More Fields are Empty', status: 'danger', timeout: 3000 })
+                this.messages.push({ message: 'Transaction Failed: One or More Fields are Invalid', status: 'danger', timeout: 3000 })
                 return false
             }
         },
