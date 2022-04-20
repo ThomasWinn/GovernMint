@@ -1,6 +1,6 @@
 <template>
   <div class="center">
-    <div v-if="owner_transactions === false || profile === false">
+    <div v-if="owner_transactions == false || profile == false">
       <vk-spinner></vk-spinner>
     </div>
     <div v-else>
@@ -12,7 +12,7 @@
           <p class="uk-h4">Remaining Balance</p>
         </div>
         <div class="uk-card uk-card-default uk-card-body uk-margin-left uk-width-3-4@m uk-background-muted uk-padding uk-panel">
-          <p class="uk-h4"> {{ profile.balance }}</p>
+          <p class="uk-h4"> {{ profile[0].balance }}</p>
         </div>
       </div>
       <h1 class="uk-heading-line uk-text-center"><span>Recent Transactions</span></h1>
@@ -22,7 +22,7 @@
             <router-link :to="{name:'Transaction Detail', params:{transactionId:trans.id}}"> {{trans.description}} </router-link>
             <dd>{{ trans.category }}</dd>
             <dd>{{ trans.amount }}</dd>
-            <dd>{{ trans.date }}</dd>
+            <dd>{{ trans.date.toDate().toDateString() }}</dd>
             <dd>{{ trans.location }}</dd>
             <dd>{{ trans.paymentType}}</dd>
             <hr class="solid">
@@ -52,8 +52,8 @@ export default {
   methods: {
       check: function() {
           console.log(auth.currentUser.uid);
-          console.log("owner balance: " + this.profile.owner);
-          console.log(this.profile.balance);
+          // console.log("owner balance: " + this.profile.owner);
+          // console.log(this.profile.balance);
       }
   }
 }
