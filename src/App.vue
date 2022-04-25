@@ -45,6 +45,10 @@ export default {
   color: #2c3e50;
 }
 
+.left {
+  text-align: left;
+}
+
 .center {
   text-align: center;
 }
