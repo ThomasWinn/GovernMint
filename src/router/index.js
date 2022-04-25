@@ -49,6 +49,15 @@ const routes = [
     },
   },
   {
+    path: '/filterResults',
+    name: 'FilterResults',
+    component: FilterResultsView,
+    props: true,
+    meta: {
+      requiresAuth: true
+    },
+  },
+  {
     path: '/todos/:itemId',
     name: 'Task View',
     component: TodosIdView,

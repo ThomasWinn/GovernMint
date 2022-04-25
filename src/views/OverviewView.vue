@@ -122,7 +122,7 @@ export default {
       chosen_category: "",
       chosen_payment_type: "",
       chosen_time: "",
-      chosen_higher_lower_bound: 0
+      chosen_higher_lower_bound: ""
     }
   },
   firestore: function() {
@@ -167,7 +167,15 @@ export default {
       console.log(this.chosen_payment_type);
       console.log(this.chosen_higher_lower_bound);
       console.log();
-      // return this.$router.push({name: 'expandedSearch'});
+      let prop_dict = {
+        time_filter: int(this.chosen_time.substring(0, this.chosen_time.indexOf(')'))),
+        category_filter: this.chosen_category,
+        pType_filter: this.chosen_payment_type,
+        money_filter: int(this.chosen_higher_lower_bound.substring(0, this.chosen_higher_lower_bound.indexOf(')')))
+      };
+
+
+      return this.$router.push({name: 'FilterResults', params: {filtered: prop_dict}});
     }
   },
   computed: {
