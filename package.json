@@ -14,6 +14,7 @@
     "chart.js": "^3.7.1",
     "core-js": "^3.8.3",
     "firebase": "^8.10.1",
+    "uikit-icons": "^0.5.0",
     "v-calendar": "^2.4.1",
     "vue": "^2.6.14",
     "vue-chartjs": "^4.0.5",
