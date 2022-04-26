@@ -10,6 +10,7 @@ import NotFoundView from '../views/NotFoundView'
 import AddTransactionView from '../views/AddTransactionView'
 import TransactionDetailView from '../views/TransactionDetailView'
 import OverviewView from '../views/OverviewView'
+import FilterResultsView from '../views/FilterResultsView'
 import BudgetView from '../views/BudgetView'
 import SummaryView from '../views/SummaryView'
 import {auth} from "@/firebaseConfig.js"

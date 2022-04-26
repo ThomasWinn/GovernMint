@@ -168,10 +168,10 @@ export default {
       console.log(this.chosen_higher_lower_bound);
       console.log();
       let prop_dict = {
-        time_filter: int(this.chosen_time.substring(0, this.chosen_time.indexOf(')'))),
+        time_filter: parseInt(this.chosen_time.substring(0, this.chosen_time.indexOf(')'))),
         category_filter: this.chosen_category,
         pType_filter: this.chosen_payment_type,
-        money_filter: int(this.chosen_higher_lower_bound.substring(0, this.chosen_higher_lower_bound.indexOf(')')))
+        money_filter: parseInt(this.chosen_higher_lower_bound.substring(0, this.chosen_higher_lower_bound.indexOf(')')))
       };
 
 
