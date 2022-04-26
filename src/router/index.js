@@ -9,8 +9,8 @@ import DoneCategoryView from '../views/DoneCategoryView'
 import NotFoundView from '../views/NotFoundView'
 import AddTransactionView from '../views/AddTransactionView'
 import TransactionDetailView from '../views/TransactionDetailView'
+import AllTransactionsView from '../views/AllTransactionsView'
 import OverviewView from '../views/OverviewView'
-import FilterResultsView from '../views/FilterResultsView'
 import BudgetView from '../views/BudgetView'
 import SummaryView from '../views/SummaryView'
 import {auth} from "@/firebaseConfig.js"
@@ -50,10 +50,9 @@ const routes = [
     },
   },
   {
-    path: '/filterResults',
-    name: 'FilterResults',
-    component: FilterResultsView,
-    props: true,
+    path: '/allTransactions',
+    name: 'AllTransactions',
+    component: AllTransactionsView,
     meta: {
       requiresAuth: true
     },
