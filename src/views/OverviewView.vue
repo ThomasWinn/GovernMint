@@ -18,6 +18,7 @@
       <!-- TODO: Filtering brings us to different page without showing remaining balance -->
       <br>
       <h1 class="uk-heading-line uk-text-center"><span>Recent Transactions</span></h1>
+      <button class="uk-button uk-button-default" @click="downloadCSVData()">Export to CSV</button>
       <div class="left">
         <div class="uk-overflow-auto">
               <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
@@ -89,6 +90,26 @@ export default {
       }
       console.log(this.limit);
     },
+    // https://stackoverflow.com/questions/58292771/downloading-a-csv-of-file-using-vue-and-js
+    downloadCSVData: function() {
+      // location needs to be stripped of commas same with every other string
+      // I believe we dont need to do payment type since it's predefined already
+      let csv = 'Date, Description, Location, Category, Payment Type, Amount\n';
+      for (let i = 0; i < this.owner_transactions.length; i++) {
+        csv += this.owner_transactions[i].date + ',';
+        csv += this.owner_transactions[i].description.replace(/,/g, '') + ',';
+        csv += this.owner_transactions[i].location.replace(/,/g, '') + ',';
+        csv += this.owner_transactions[i].category.replace(/,/g, '') + ',';
+        csv += this.owner_transactions[i].paymentType + ',';
+        csv += '$' + this.owner_transactions[i].amount ;
+        csv += '\n';
+      }
+      const anchor = document.createElement('a');
+      anchor.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+      anchor.target = '_blank';
+      anchor.download = 'MyTransactions.csv';
+      anchor.click();
+    }
   },
   computed: {
     limitTrans: function() {
