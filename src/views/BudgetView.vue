@@ -3,9 +3,15 @@
         <vk-notification status="success" :messages.sync="messages"></vk-notification>
         <h1> Current Monthly Spending Goal </h1>
         <h2> ${{total}} </h2>
+        <div v-if="spendingCategories.length === 0">
+            <button class="uk-button uk-button-default" @click="addDefaultCategories()">Click to add Default Spending Categories </button>
+            <!-- <h4 class="uk-heading-small">Small</h4>  -->
+            <p class="uk-text-small"> or add your own manually </p>
+        </div>
+        <!-- <input class="uk-input uk-form-width-medium" v-model="newCategory" id="form-stacked-text" type="text"> <currency-input ref="amount" class="uk-input uk-form-width-medium" id="form-amount" onClick="this.select();" v-model="newLimit" :options="{ currency: 'USD' }" /> <vk-button @click="addNewCategory">+</vk-button> <br> <br> -->
+
         <ul v-if="spendingCategories !== false">
         <input class="uk-input uk-form-width-medium" v-model="newCategory" id="form-stacked-text" type="text"> <currency-input ref="amount" class="uk-input uk-form-width-medium" id="form-amount" onClick="this.select();" v-model="newLimit" :options="{ currency: 'USD' }" /> <vk-button @click="addNewCategory">+</vk-button> <br> <br>
-
         <li v-for="category in spendingCategories" :key="category.id">
             <div class="uk-flex">
                     <router-link class="uk-card-small uk-card-default uk-card-body uk-margin-left uk-width-3-4@m uk-background-primary uk-light uk-padding uk-panel" style="text-decoration: none; text-align: right;; color: inherit;" :to="{ name: 'oneCategory', params: { id: category.id, category: category.category } }">
@@ -74,6 +80,20 @@ export default {
                 this.messages.push({ message: 'Adding Category Failed: One or More Fields are Empty', status: 'danger', timeout: 3000 })
                 return false
             }
+        },
+        addDefaultCategories: function() {
+            let categories = ["Food", "Housing", "Transportation", "Entertainment", "Miscellaneous"]
+            for (let i = 0; i < categories.length; i++) {
+                let addCategory = {
+                    category: categories[i],
+                    limit: 100,
+                    user: auth.currentUser.uid
+                };
+                db.collection("spendingCategories").add(addCategory)
+            }
+            db.collection("profile").doc(this.profile[0].id).update({balance: 500})
+            this.messages.push({ message: 'Default Spending Categories Successfully Added', status: 'success', timeout: 3000 })
+            return true
         }
     },
     computed: {
