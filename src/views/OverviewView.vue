@@ -1,7 +1,11 @@
 <template>
   <div class="center">
     <div v-if="owner_transactions == false || profile == false">
-      <vk-spinner></vk-spinner>
+      <div v-if="profile == false">
+        {{sussy()}}
+        <vk-spinner></vk-spinner>
+      </div>
+      <!-- <vk-spinner></vk-spinner> -->
     </div>
     <div v-else>
       <vk-notification status="success" :messages.sync="messages"></vk-notification>
@@ -70,14 +74,18 @@ export default {
     return {
       owner_transactions: false,
       profile: false,
+      all_profiles: false,
+      created_new_profile: false,
       limit: 3,
       showSeeMore: true,
+      unique_users: []
     }
   },
   firestore: function() {
     return {
       owner_transactions: db.collection('transactions').where('owner', '==', auth.currentUser.uid).orderBy('date', 'desc'),
-      profile: db.collection('profile').where('owner', '==', auth.currentUser.uid)
+      profile: db.collection('profile').where('owner', '==', auth.currentUser.uid),
+      all_profiles: db.collection('profile')
     }
   },
   methods: {
@@ -115,6 +123,24 @@ export default {
       anchor.target = '_blank';
       anchor.download = 'MyTransactions.csv';
       anchor.click();
+    },
+    sussy: function() {
+      console.log(this.profile);
+      if(this.all_profiles != false && this.created_new_profile == false){
+        for (let i = 0; i < this.all_profiles.length; i++) {
+          if (!this.unique_users.includes(this.all_profiles[i].owner)) {
+            this.unique_users.push(this.all_profiles[i].owner);
+          }
+        }
+        if(!this.unique_users.includes(auth.currentUser.uid)){
+          console.log('ADDED A NEW DEFAULT PROFILE');
+          db.collection('profile').add({
+            balance: 0,
+            owner: auth.currentUser.uid
+          });
+          this.created_new_profile = true
+        }
+      }
     }
   },
   computed: {
