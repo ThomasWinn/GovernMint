@@ -1,16 +1,14 @@
 <template>
   <div class="center">
-    <div v-if="owner_transactions == false || profile == false">
-      <div v-if="profile == false">
-        {{sussy()}}
-        <vk-spinner></vk-spinner>
-      </div>
-      <!-- <vk-spinner></vk-spinner> -->
+    <div v-if="profile == false">
+      {{sussy()}}
+      <vk-spinner></vk-spinner>
     </div>
     <div v-else>
       <vk-notification status="success" :messages.sync="messages"></vk-notification>
       <h1> Monthly Spending Goal </h1>
-        <h2> ${{profile[0].balance}} </h2>
+        <h2 v-if="profile[0].balance == 0"> <button class="uk-button uk-button-default" @click="goToBugeting()">Click to add Spending Categories </button> </h2>
+        <h2 v-else> ${{profile[0].balance}} </h2>
       <div class="uk-flex">
         <!-- <div class="uk-card uk-card-default uk-card-body uk-width-1-2@m">Item 1</div> -->
         <div class="uk-card uk-card-default uk-card-body uk-margin-left uk-width-1-4@m uk-background-primary uk-light uk-padding uk-panel">
@@ -123,6 +121,9 @@ export default {
       anchor.target = '_blank';
       anchor.download = 'MyTransactions.csv';
       anchor.click();
+    },
+    goToBugeting: function() {
+      this.$router.push({name: "Budget"})
     },
     sussy: function() {
       console.log(this.profile);

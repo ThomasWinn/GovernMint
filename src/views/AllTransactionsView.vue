@@ -89,7 +89,7 @@
                 </div>
             </div>
             <!-- <span uk-icon="icon: plus-circle; ratio: 3.5"></span> -->
-            {{owner_transactions.length - 1}} - {{this.limit}} == {{owner_transactions.length - 1 - this.limit}}
+            <!-- {{owner_transactions.length - 1}} - {{this.limit}} == {{owner_transactions.length - 1 - this.limit}} -->
             <!-- <div v-if="(owner_transactions.length - 1) - this.limit >= 0"> -->
             <div v-if="this.showSeeMore">
                 <button @click="showMore()" class="uk-button uk-button-primary uk-button-large uk-width-1-1">See More</button>
