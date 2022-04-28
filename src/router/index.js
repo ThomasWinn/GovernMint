@@ -9,6 +9,7 @@ import DoneCategoryView from '../views/DoneCategoryView'
 import NotFoundView from '../views/NotFoundView'
 import AddTransactionView from '../views/AddTransactionView'
 import TransactionDetailView from '../views/TransactionDetailView'
+import AllTransactionsView from '../views/AllTransactionsView'
 import OverviewView from '../views/OverviewView'
 import BudgetView from '../views/BudgetView'
 import SummaryView from '../views/SummaryView'
@@ -45,6 +46,14 @@ const routes = [
     name: 'Overview',
     component: OverviewView,
     meta: { 
+      requiresAuth: true
+    },
+  },
+  {
+    path: '/allTransactions',
+    name: 'AllTransactions',
+    component: AllTransactionsView,
+    meta: {
       requiresAuth: true
     },
   },
