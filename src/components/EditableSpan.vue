@@ -1,30 +1,41 @@
 <template>
-  <span v-if="!editMode" @click="editMode=true" > {{text}} </span>
-  <input v-else          @blur="clickOut" v-model="inputContent"/>
+  <span v-if="!editMode" @click="clickIn"> {{text}} </span>
+  <!-- <input class="uk-input uk-form-width-medium" v-else @blur="clickOut" v-model="inputContent" ref="focusfield" /> -->
+  <input v-else @blur="clickOut" v-model="inputContent" ref="focusfield" />
+
 </template>
 
 <script>
 export default {
-  name: 'EditableSpan',
+  name: "EditableSpan",
   props: {
-    text:String
+    text:Number
   },
   data: function() {
-      return {
-          editMode: false,
-          inputContent: this.text
-      }
+    return {
+      editMode: false,
+      inputContent: this.text
+    }
   },
-  methods:{
-      clickOut: function() {
-          this.editMode = false;
-          this.$emit("edited", this.inputContent)
-      }
+  methods: {
+    clickOut: function() {
+      this.editMode = false;
+      this.$emit("edited", this.inputContent)
+    },
+    clickIn: function() {
+      this.editMode = true
+      this.$nextTick(() => {
+        this.$refs.focusfield.focus()
+      });
+    }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+input {
+  font-size: 30px;
+  max-width: 100px;
+}
 
 </style>

@@ -12,6 +12,7 @@ import TransactionDetailView from '../views/TransactionDetailView'
 import AllTransactionsView from '../views/AllTransactionsView'
 import OverviewView from '../views/OverviewView'
 import BudgetView from '../views/BudgetView'
+import BudgetCategoryView from '../views/BudgetCategoryView'
 import SummaryView from '../views/SummaryView'
 import {auth} from "@/firebaseConfig.js"
 Vue.use(VueRouter)
@@ -116,6 +117,16 @@ const routes = [
     component: BudgetView,
     props: true,
     meta: {
+      requiresAuth: true
+    },
+  },
+  {
+    path: '/monthlyBudget/:category/:id',
+    // path: '/monthlyBudget/:id',
+    name: 'oneCategory',
+    component: BudgetCategoryView,
+    props: true,
+    meta: { 
       requiresAuth: true
     },
   },
