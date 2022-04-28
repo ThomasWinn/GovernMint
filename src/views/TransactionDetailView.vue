@@ -20,7 +20,7 @@
                     <label class="uk-form-label uk-margin-right" for="form-category">Select Category:</label>
                     <div class="uk-form-controls">
                         <select v-model="category" class="uk-select uk-form-width-medium" id="form-category">
-                            <option v-for="category in categories" :key="category.id">{{ category.name }}</option>
+                            <option v-for="category in categories" :key="category.id">{{ category.category }}</option>
                         </select>
                     </div>
                 </div>
@@ -93,14 +93,14 @@ export default {
     firestore: function() {
         return {
             transactionData: db.collection('transactions').doc(this.transactionId),
-            categories: db.collection('categories').orderBy('name'),
+            categories: db.collection('spendingCategories').where("user", "==", auth.currentUser.uid).orderBy('category'),
             paymentTypes: db.collection('paymentTypes').orderBy('name')
         }
     },
     methods: {
         validateTransaction: function() {
             this.description = this.description.trim()
-            return (this.date != "" && this.description.length > 0 && this.category.length > 0 && this.paymentType.length > 0 && this.amount > 0)
+            return (this.date && this.description.length > 0 && this.category.length > 0 && this.paymentType.length > 0 && this.amount > 0)
         },
         saveTransaction: function() {
             if (this.validateTransaction()) {

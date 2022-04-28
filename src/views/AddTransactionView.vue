@@ -20,7 +20,7 @@
                     <label class="uk-form-label uk-margin-right" for="form-category">Select Category:</label>
                     <div class="uk-form-controls">
                         <select v-model="category" class="uk-select uk-form-width-medium" id="form-category">
-                            <option v-for="category in categories" :key="category.id">{{ category.name }}</option>
+                            <option v-for="category in categories" :key="category.id">{{ category.category }}</option>
                         </select>
                     </div>
                 </div>
@@ -41,7 +41,14 @@
                 <div class="uk-margin">
                     <label class="uk-form-label" for="form-location">Location:</label>
                     <div class="uk-form-controls">
-                        <vue-google-autocomplete ref="location" v-model="location" id="form-location" class="uk-input uk-form-width-large" enable-geolocation v-on:placechanged="getCoordinates">
+                        <vue-google-autocomplete ref="location" 
+                            v-model="location" 
+                            id="form-location" 
+                            class="uk-input uk-form-width-large" 
+                            enable-geolocation 
+                            v-on:placechanged="getCoordinates"
+                            >
+                            <!-- v-on:inputChange="clearLocation"> -->
                         </vue-google-autocomplete>
                     </div>
                 </div>
@@ -90,14 +97,14 @@ export default {
     },
     firestore: function() {
         return {
-            categories: db.collection('categories').orderBy('name'),
-            paymentTypes: db.collection('paymentTypes').orderBy('name')
+            categories: db.collection('spendingCategories').where("user", "==", auth.currentUser.uid).orderBy('category'),
+            paymentTypes: db.collection('paymentTypes').orderBy('name'),
         }
     },
     methods: {
         validateTransaction: function() {
             this.description = this.description.trim()
-            return (this.date != "" && this.description.length > 0 && this.category.length > 0 && this.paymentType.length > 0 && this.amount > 0)
+            return (this.date && this.description.length > 0 && this.category.length > 0 && this.paymentType.length > 0 && this.amount > 0 && this.location)
         },
         saveTransaction: function() {
             if (this.validateTransaction()) {
@@ -131,7 +138,7 @@ export default {
         saveAndNew: function() {
             if (this.saveTransaction()) {
                 this.$nextTick(() => {
-                    this.date = ""
+                    this.date = new Date()
                     this.description = ""
                     this.category = ""
                     this.paymentType = ""
@@ -140,7 +147,6 @@ export default {
                     this.longitude = null
                     this.amount = 0
                     this.$refs.location.clear()
-                    this.$refs.amount.value = 0
                 });
             }
         },
@@ -153,7 +159,13 @@ export default {
             this.location = placeResultData.formatted_address
             this.latitude = addressData.latitude
             this.longitude = addressData.longitude
-        }
+            console.log(this.location)
+        },
+        // clearLocation: function() {
+        //     this.location = ""
+        //     this.latitude = null
+        //     this.longitude = null
+        // }
     }
 }
 </script>
