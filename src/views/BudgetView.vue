@@ -1,7 +1,7 @@
 <template>
     <div class="center">
         <vk-notification status="success" :messages.sync="messages"></vk-notification>
-        <h1> Monthly Spending Goal </h1>
+        <h1> Current Monthly Spending Goal </h1>
         <h2> ${{total}} </h2>
         <ul v-if="spendingCategories !== false">
         <input class="uk-input uk-form-width-medium" v-model="newCategory" id="form-stacked-text" type="text"> <currency-input ref="amount" class="uk-input uk-form-width-medium" id="form-amount" onClick="this.select();" v-model="newLimit" :options="{ currency: 'USD' }" /> <vk-button @click="addNewCategory">+</vk-button> <br> <br>

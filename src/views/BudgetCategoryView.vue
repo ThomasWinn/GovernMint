@@ -1,6 +1,6 @@
 <template>
   <div class="center">
-    <div v-if="owner_transactions == false || profile == false">
+    <div v-if="profile == false">
       <vk-spinner></vk-spinner>
     </div>
     <div v-else>
@@ -12,7 +12,7 @@
           <p class="uk-h4">Remaining Balance</p>
         </div>
         <div class="uk-card uk-card-default uk-card-body uk-margin-left uk-width-3-4@m uk-background-muted uk-padding uk-panel">
-          <p class="uk-h4"> ${{ categoryObj.limit }} </p>
+          <p class="uk-h4"> ${{ spent }} </p>
         </div>
       </div>
 
@@ -64,6 +64,7 @@ export default {
       owner_transactions: false,
       profile: false,
       categoryObj: false,
+      category_transactions: false,
       changeTotal: 0
     }
   },
@@ -71,6 +72,7 @@ export default {
     return {
       categoryObj: db.collection("spendingCategories").doc(this.id),
       owner_transactions: db.collection('transactions').where('owner', '==', auth.currentUser.uid).orderBy('date', 'desc'),
+      category_transactions: db.collection('transactions').where('owner', '==', auth.currentUser.uid).where('category', '==', this.category).orderBy('date', 'desc'),
       profile: db.collection('profile').where('owner', '==', auth.currentUser.uid)
     }
   },
@@ -84,8 +86,18 @@ export default {
       this.$firestoreRefs.categoryObj.update({limit: parseInt(updatedLimit)});
       db.collection("profile").doc(this.profile[0].id).update({balance: this.profile[0].balance + this.changeTotal})
     }
-  }
+  },
+  computed: {
+      spent: function() {
+          var spent = 0;
+          this.category_transactions.forEach(e => {
+              spent += e.amount;
+          });
+          return this.categoryObj.limit - spent
+      }
+  },
 }
+
 </script>
 
 <style scoped>

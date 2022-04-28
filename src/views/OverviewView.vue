@@ -4,14 +4,20 @@
       <vk-spinner></vk-spinner>
     </div>
     <div v-else>
-      <br><br>
+      <vk-notification status="success" :messages.sync="messages"></vk-notification>
+      <h1> Monthly Spending Goal </h1>
+        <h2> ${{profile[0].balance}} </h2>
       <div class="uk-flex">
         <!-- <div class="uk-card uk-card-default uk-card-body uk-width-1-2@m">Item 1</div> -->
         <div class="uk-card uk-card-default uk-card-body uk-margin-left uk-width-1-4@m uk-background-primary uk-light uk-padding uk-panel">
           <p class="uk-h4">Remaining Balance</p>
         </div>
         <div class="uk-card uk-card-default uk-card-body uk-margin-left uk-width-3-4@m uk-background-muted uk-padding uk-panel">
-          <p class="uk-h4"> ${{ profile[0].balance }}</p>
+          <p class="uk-h4"> ${{ remaining }}</p>
+
+          <progress v-if="percent > 0.66" class="uk-progress progress-green" style="border: 2px solid black" :value="remaining" :max="profile[0].balance"></progress>
+          <progress v-else-if="percent > 0.33" class="uk-progress progress-yellow" style="border: 2px solid black" :value="remaining" :max="profile[0].balance"></progress>
+          <progress v-else class="uk-progress progress-red" style="border: 2px solid black" :value="remaining" :max="profile[0].balance"></progress>
         </div>
       </div>
       <!-- TODO: Currently stuck on filter applying -->
@@ -114,6 +120,16 @@ export default {
   computed: {
     limitTrans: function() {
       return this.owner_transactions.slice(0, this.limit)
+    },
+    remaining: function() {
+      var spent = 0;
+      this.owner_transactions.forEach(e => {
+          spent += e.amount;
+      });
+      return (this.profile[0].balance - spent).toFixed(2)
+    },
+    percent: function() {
+      return this.remaining / this.profile[0].balance
     }
   }
 }
@@ -121,5 +137,35 @@ export default {
 </script>
 
 <style scoped>
+.uk-progress.progress-green::-webkit-progress-value {
+  background-color: Green ;
+}
+.uk-progress.progress-green::-moz-progress-bar {
+  background-color: Green ;
+}
+.uk-progress.progress-green::-ms-fill {
+  background-color: Green ;
+}
+
+.uk-progress.progress-yellow::-webkit-progress-value {
+  background-color: rgb(255, 183, 0) ;
+}
+.uk-progress.progress-yellow::-moz-progress-bar {
+  background-color: rgb(255, 183, 0) ;
+}
+.uk-progress.progress-yellow::-ms-fill {
+  background-color: rgb(255, 183, 0) ;
+}
+
+.uk-progress.progress-red::-webkit-progress-value {
+  background-color: red ;
+}
+.uk-progress.progress-red::-moz-progress-bar {
+  background-color: red ;
+}
+.uk-progress.progress-red::-ms-fill {
+  background-color: red ;
+}
+
 
 </style>
