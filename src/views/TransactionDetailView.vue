@@ -7,7 +7,7 @@
                 <div class="uk-margin">
                     <label class="uk-form-label" for="form-date">Date:</label>
                     <div class="uk-form-controls">
-                        <date-picker v-model="date" id="form-date"/>
+                        <date-picker ref="datepicker" v-model="date" id="form-date"/>
                     </div>
                 </div>
                 <div class="uk-margin">
@@ -155,6 +155,7 @@ export default {
                 this.latitude = newData.coordinates._lat
                 this.longitude = newData.coordinates._long
                 this.amount = newData.amount
+                this.$refs.datepicker.move(this.date)
             }
       }
     }

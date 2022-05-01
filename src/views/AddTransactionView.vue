@@ -159,7 +159,6 @@ export default {
             this.location = placeResultData.formatted_address
             this.latitude = addressData.latitude
             this.longitude = addressData.longitude
-            console.log(this.location)
         },
         // clearLocation: function() {
         //     this.location = ""
