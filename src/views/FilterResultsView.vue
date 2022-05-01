@@ -10,7 +10,21 @@
                 <vk-spinner></vk-spinner>
             </div>
             <div v-else>
-                {{filtered}}
+                <!-- {{filtered}} -->
+                <!-- {{filtered.values()}} -->
+                <!-- <div v-for="val in filtered.values()">
+                    <span> {{val}} </span>
+                </div> -->
+                <!-- {{ getFilterOptions() }} -->
+                <table>
+                    <tr>
+                    <td class="uk-text-default"> <h3> Filtering by: </h3> </td>
+                    <span v-for="val in getFilterOptions()" :vid-id="val" :key="val">
+                        <td><button class="uk-button uk-button-default">{{val}}</button></td>
+                    </span>
+                    </tr>
+                </table>
+
                 {{ preprocess_filter() }}
                 <div class="left">
                     <div class="uk-overflow-auto">
@@ -47,6 +61,7 @@
                 <!-- <span uk-icon="icon: plus-circle; ratio: 3.5"></span> -->
                 <!-- <button @click="showMore()" class="uk-button uk-button-primary uk-button-large uk-width-1-1">See More</button> -->
             </div>
+            <button class="uk-button uk-button-default" @click="goToAllT()"> Return to all Transactions </button>
         </div>
     </div> 
 </template>
@@ -132,10 +147,10 @@ export default {
             console.log(this.chosen_higher_lower_bound);
             console.log();
             let prop_dict = {
-                time_filter: parseInt(this.chosen_time.substring(0, this.chosen_time.indexOf(')'))),
+                time_filter: this.chosen_time,
                 category_filter: this.chosen_category,
                 pType_filter: this.chosen_payment_type,
-                money_filter: parseInt(this.chosen_higher_lower_bound.substring(0, this.chosen_higher_lower_bound.indexOf(')')))
+                money_filter: this.chosen_higher_lower_bound
             };
             return this.$router.push({name: 'FilterResults', params: {filtered: prop_dict}});
         },
@@ -149,23 +164,25 @@ export default {
                 // id the nulls
 
                 // THIS NEEDS TO BE UNCOMMENTED FOR time_filter
-                // let todays_date = new Date();
+                let todays_date = new Date();
                 for (let i = 0; i < this.owner_transactions.length; i++ ) {
                     // how am i going to account for nulls?
                     let tranny = this.owner_transactions[i];
                     let can_add = false;
-                    // if (this.filtered['time_filter'] !== null) {
-                    //     // console.log(todays_date.getTime() + ' - ' + tranny.date.toDate().getTime());
-                    //     // console.log(todays_date.getTime() - tranny.date.toDate().getTime());
-                    //     // console.log(this.time_dicky[this.filtered['time_filter']]);
-                    //     if ((todays_date.getTime() - this.time_dicky[this.filtered['time_filter']]) < tranny.date.toDate().getTime() && todays_date.getTime() > tranny.date.toDate().getTime()) {
-                    //         console.log(tranny.date.toDate())
-                    //         can_add = true;
-                    //     }
-                    //     else {
-                    //         continue;
-                    //     }
-                    // }
+                    if (this.filtered['time_filter'] !== '') {
+                    
+                        var filter_date_str = this.filtered['time_filter']
+                        console.log(filter_date_str);
+                        var date_label = parseInt(filter_date_str.substring(0, filter_date_str.indexOf(')')))
+                        
+                        if ((todays_date.getTime() - this.time_dicky[date_label]) < tranny.date.toDate().getTime() && todays_date.getTime() > tranny.date.toDate().getTime()) {
+                            console.log(tranny.date.toDate())
+                            can_add = true;
+                        }
+                        else {
+                            continue;
+                        }
+                    }
                     if (this.filtered['category_filter'] !== '') {
                         console.log(this.filtered['category_filter']);
                         if (this.filtered['category_filter'] === tranny.category) {
@@ -185,15 +202,17 @@ export default {
                         }
                     }
                     // TODO: HOW DO I CHECK FOR NULL VALUES
-                    // if (!this.filtered['money_filter']) {
-                    //     console.log(this.filtered['money_filter']);
-                    //     if (this.money_bounding_dicky[this.filtered['money_filter']][0] < tranny.amount && tranny.amount <= this.money_bounding_dicky[this.filtered['money_filter']][1]) {
-                    //         can_add = true;
-                    //     }
-                    //     else {
-                    //         continue;
-                    //     }
-                    // }
+                    if (this.filtered['money_filter'] !== '') {
+                        var filter_money_str = this.filtered['money_filter']
+                        // console.log(filter_money_str);
+                        var money_label = parseInt(filter_money_str.substring(0, filter_money_str.indexOf(')')))
+                        if (this.money_bounding_dicky[money_label][0] < tranny.amount && tranny.amount <= this.money_bounding_dicky[money_label][1]) {
+                            can_add = true;
+                        }
+                        else {
+                            continue;
+                        }
+                    }
                     if (can_add) {
                         console.log(this.owner_transactions[i].date.toDate());
                         this.filtered_list.push(this.owner_transactions[i]);
@@ -208,6 +227,26 @@ export default {
             else {
                 console.log('woof woof');
             }
+        },
+        getFilterOptions: function() {
+            console.log("Jefftest")
+            var new_fol = []
+            var filter_option_list = Object.values(this.filtered)
+            for (let i = 0; i < filter_option_list.length; i++ ){
+                console.log(filter_option_list[1])
+                if(filter_option_list[i] !== ''){
+                    if(i === 0 || i == 3) {
+                        new_fol.push(filter_option_list[i].slice(3))
+                    } else {
+                        new_fol.push(filter_option_list[i])
+                    }
+                }
+            }
+            console.log(new_fol)
+            return new_fol
+        },
+        goToAllT: function() {
+            this.$router.push({name: "AllTransactions"})
         }
     },
     computed: {
@@ -218,6 +257,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>
