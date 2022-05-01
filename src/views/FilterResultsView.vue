@@ -1,98 +1,64 @@
 <template>
     <div class="center">
-        {{filtered}}
-        <h3> Filter <button @click="showFilters()">Expand Me!</button></h3>
-        <div v-if="toShow">
-            <form class="uk-form-horizontal uk-margin-large">
-                <div class="uk-margin">
-                    <label class="uk-form-label" for="form-horizontal-select">How Long Ago?</label>
-                    <div class="uk-form-controls">
-                        <select v-model="chosen_time" class="uk-select" id="form-horizontal-select">
-                            <option v-for="(time, tindex) in this.time_ago" :key="tindex">
-                            {{ time }}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="uk-margin">
-                    <label class="uk-form-label" for="form-horizontal-select">Show Only What Category?</label>
-                    <div class="uk-form-controls">
-                        <select v-model="chosen_category" class="uk-select" id="form-horizontal-select">
-                            <option v-for="(category, index) in this.unique_categories" :key="index">
-                            {{ category }}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="uk-margin">
-                    <label class="uk-form-label" for="form-horizontal-select">What Payment Type Was Used?</label>
-                    <div class="uk-form-controls">
-                        <select v-model="chosen_payment_type" class="uk-select" id="form-horizontal-select">
-                            <option v-for="(pType, pindex) in this.unique_payment_type" :key="pindex">
-                            {{ pType }}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="uk-margin">
-                    <label class="uk-form-label" for="form-horizontal-select">Between What Amount?</label>
-                    <div class="uk-form-controls">
-                        <select v-model="chosen_higher_lower_bound" class="uk-select" id="form-horizontal-select">
-                            <option v-for="(aType, aindex) in this.amount_bound" :key="aindex">
-                            {{ aType }}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-
-            </form>
-            
-
-        <button @click="filterSearch()" class="uk-button uk-button-primary">Filter</button>
-            
-        </div>
         <br>
-        <h1 class="uk-heading-line uk-text-center"><span>Filtered Transactions</span></h1>
-        <div class="left">
-            <div class="uk-overflow-auto">
-                <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th class="uk-table-expand">Description</th>
-                            <th>Category</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody v-for="(trans, index) in limitTrans" :key="index">
-                        <tr>
-                            <td>
-                                <p>{{ trans.date.toDate().getDay() }}</p>
-                    
-                                <p>{{ getMonthAbv(trans.date.toDate().getMonth()) }}</p>
-                            </td>
-                            <td class="uk-table-link">
-                                <router-link :to="{name:'Transaction Detail', params:{transactionId:trans.id}}"> {{trans.description}} </router-link>
-                            </td>
-                            <td>{{ trans.category }}</td>
-                            <td>${{ trans.amount }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div v-if="filtered === false">
+            {{ goToAllTransactions() }}
+        </div>
+        <div v-else>
+            <h1 class="uk-heading-line uk-text-center"><span>Filtered Transactions</span></h1>
+            <div v-if="owner_transactions === false">
+                <vk-spinner></vk-spinner>
+            </div>
+            <div v-else>
+                {{filtered}}
+                {{ preprocess_filter() }}
+                <div class="left">
+                    <div class="uk-overflow-auto">
+                        <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
+                            <thead>
+                                <tr>
+                                    <th>Full Date</th>
+                                    <th>Date</th>
+                                    <th class="uk-table-expand">Description</th>
+                                    <th>Category</th>
+                                    <th>Payment Type</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody v-for="(trans, index) in this.filtered_list" :key="index">
+                                <tr>
+                                    <td> {{trans.date.toDate()}}
+                                    <td>
+                                        <p>{{ trans.date.toDate().getDay() }}</p>
+                            
+                                        <p>{{ getMonthAbv(trans.date.toDate().getMonth()) }}</p>
+                                    </td>
+                                    <td class="uk-table-link">
+                                        <router-link :to="{name:'Transaction Detail', params:{transactionId:trans.id}}"> {{trans.description}} </router-link>
+                                    </td>
+                                    <td>{{ trans.category }}</td>
+                                    <td>{{ trans.paymentType }}</td>
+                                    <td>${{ trans.amount }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- <span uk-icon="icon: plus-circle; ratio: 3.5"></span> -->
+                <!-- <button @click="showMore()" class="uk-button uk-button-primary uk-button-large uk-width-1-1">See More</button> -->
             </div>
         </div>
-        <!-- <span uk-icon="icon: plus-circle; ratio: 3.5"></span> -->
-        <button @click="showMore()" class="uk-button uk-button-primary uk-button-large uk-width-1-1">See More</button>
     </div> 
 </template>
 
 <script>
 import { db, auth } from '@/firebaseConfig'
 export default {
-    props: ["filtered"],
+    props: {
+        'filtered': {
+            default: false
+        }
+    },
     data: function() {
         return {
             owner_transactions: false,
@@ -106,7 +72,21 @@ export default {
             chosen_category: "",
             chosen_payment_type: "",
             chosen_time: "",
-            chosen_higher_lower_bound: ""
+            chosen_higher_lower_bound: "",
+            changed: false,
+            filtered_list: [],
+            time_dicky: {
+                1: 24 * 60 * 60 * 1000, // day ago
+                2: 7 * 24 * 60 * 60 * 1000, // 1 week ago
+                3: 4 * 7 * 24 * 60 * 60 * 1000, // 1 month ago
+                4: 12 * 4 * 7 * 24 * 60 * 60 * 1000 // 1 year ago
+            },
+            money_bounding_dicky: {
+                1: [0, 20],
+                2: [20, 50],
+                3: [50, 100],
+                4: [100, 9999999999]
+            }
         }
     },
     firestore: function() {
@@ -158,11 +138,81 @@ export default {
                 money_filter: parseInt(this.chosen_higher_lower_bound.substring(0, this.chosen_higher_lower_bound.indexOf(')')))
             };
             return this.$router.push({name: 'FilterResults', params: {filtered: prop_dict}});
+        },
+        goToAllTransactions: function() {
+            this.$router.push({name: 'AllTransactions'});
+        },
+        preprocess_filter: function() {
+            if (!this.changed && this.owner_transactions.length > 0) {
+                console.log('chilling');
+                this.changed = true;
+                // id the nulls
+            
+                let todays_date = new Date();
+                for (let i = 0; i < this.owner_transactions.length; i++ ) {
+                    // how am i going to account for nulls?
+                    let tranny = this.owner_transactions[i];
+                    let can_add = false;
+                    if (this.filtered['time_filter'] !== null) {
+                        // console.log(todays_date.getTime() + ' - ' + tranny.date.toDate().getTime());
+                        // console.log(todays_date.getTime() - tranny.date.toDate().getTime());
+                        // console.log(this.time_dicky[this.filtered['time_filter']]);
+                        if ((todays_date.getTime() - this.time_dicky[this.filtered['time_filter']]) < tranny.date.toDate().getTime() && todays_date.getTime() > tranny.date.toDate().getTime()) {
+                            console.log(tranny.date.toDate())
+                            can_add = true;
+                        }
+                        else {
+                            continue;
+                        }
+                    }
+                    if (this.filtered['category_filter'] !== '') {
+                        console.log(this.filtered['category_filter']);
+                        if (this.filtered['category_filter'] === tranny.category) {
+                            can_add = true;
+                        }
+                        else {
+                            continue;
+                        }
+                    }
+                    if (this.filtered['pType_filter'] !== '') {
+                        console.log(this.filtered['category_filter']);
+                        if (this.filtered['pType_filter'] === tranny.paymentType) {
+                            can_add = true;
+                        }
+                        else {
+                            continue;
+                        }
+                    }
+                    // TODO: HOW DO I CHECK FOR NULL VALUES
+                    // if (!this.filtered['money_filter']) {
+                    //     console.log(this.filtered['money_filter']);
+                    //     if (this.money_bounding_dicky[this.filtered['money_filter']][0] < tranny.amount && tranny.amount <= this.money_bounding_dicky[this.filtered['money_filter']][1]) {
+                    //         can_add = true;
+                    //     }
+                    //     else {
+                    //         continue;
+                    //     }
+                    // }
+                    // TODO: for some reason when adding to array, it's coming out with different times on the table
+                    if (can_add) {
+                        console.log(this.owner_transactions[i].date.toDate());
+                        this.filtered_list.push(this.owner_transactions[i]);
+                    }
+                    else {
+                        console.log('IT SHOULDVE NEVER CAME HERE');
+                    }
+                }
+                console.log(this.filtered_list);
+                console.log(this.filtered_list.length);
+            }
+            else {
+                console.log('woof woof');
+            }
         }
     },
     computed: {
         limitTrans: function() {
-            return this.owner_transactions.slice(0, this.limit)
+            return this.filtered_list.slice(0, this.limit)
         }
     }
 }

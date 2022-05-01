@@ -5,7 +5,7 @@
       <vk-spinner></vk-spinner>
     </div>
     <div v-else>
-      <vk-notification status="success" :messages.sync="messages"></vk-notification>
+      <!-- <vk-notification status="success" :messages.sync="messages"></vk-notification> -->
       <h1> Monthly Spending Goal </h1>
         <h2 v-if="profile[0].balance == 0"> <button class="uk-button uk-button-default" @click="goToBugeting()">Click to add Spending Categories </button> </h2>
         <h2 v-else> ${{profile[0].balance}} </h2>

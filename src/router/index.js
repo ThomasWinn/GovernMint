@@ -10,6 +10,7 @@ import NotFoundView from '../views/NotFoundView'
 import AddTransactionView from '../views/AddTransactionView'
 import TransactionDetailView from '../views/TransactionDetailView'
 import AllTransactionsView from '../views/AllTransactionsView'
+import FilterResultsView from '../views/FilterResultsView.vue'
 import OverviewView from '../views/OverviewView'
 import BudgetView from '../views/BudgetView'
 import BudgetCategoryView from '../views/BudgetCategoryView'
@@ -54,6 +55,15 @@ const routes = [
     path: '/allTransactions',
     name: 'AllTransactions',
     component: AllTransactionsView,
+    meta: {
+      requiresAuth: true
+    },
+  },
+  {
+    path: '/filterResults',
+    name: 'FilterResults',
+    component: FilterResultsView,
+    props: true,
     meta: {
       requiresAuth: true
     },
