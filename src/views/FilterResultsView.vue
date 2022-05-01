@@ -29,7 +29,7 @@
                                 <tr>
                                     <td> {{trans.date.toDate()}}
                                     <td>
-                                        <p>{{ trans.date.toDate().getDay() }}</p>
+                                        <p>{{ trans.date.toDate().getDate() }}</p>
                             
                                         <p>{{ getMonthAbv(trans.date.toDate().getMonth()) }}</p>
                                     </td>
@@ -147,24 +147,25 @@ export default {
                 console.log('chilling');
                 this.changed = true;
                 // id the nulls
-            
-                let todays_date = new Date();
+
+                // THIS NEEDS TO BE UNCOMMENTED FOR time_filter
+                // let todays_date = new Date();
                 for (let i = 0; i < this.owner_transactions.length; i++ ) {
                     // how am i going to account for nulls?
                     let tranny = this.owner_transactions[i];
                     let can_add = false;
-                    if (this.filtered['time_filter'] !== null) {
-                        // console.log(todays_date.getTime() + ' - ' + tranny.date.toDate().getTime());
-                        // console.log(todays_date.getTime() - tranny.date.toDate().getTime());
-                        // console.log(this.time_dicky[this.filtered['time_filter']]);
-                        if ((todays_date.getTime() - this.time_dicky[this.filtered['time_filter']]) < tranny.date.toDate().getTime() && todays_date.getTime() > tranny.date.toDate().getTime()) {
-                            console.log(tranny.date.toDate())
-                            can_add = true;
-                        }
-                        else {
-                            continue;
-                        }
-                    }
+                    // if (this.filtered['time_filter'] !== null) {
+                    //     // console.log(todays_date.getTime() + ' - ' + tranny.date.toDate().getTime());
+                    //     // console.log(todays_date.getTime() - tranny.date.toDate().getTime());
+                    //     // console.log(this.time_dicky[this.filtered['time_filter']]);
+                    //     if ((todays_date.getTime() - this.time_dicky[this.filtered['time_filter']]) < tranny.date.toDate().getTime() && todays_date.getTime() > tranny.date.toDate().getTime()) {
+                    //         console.log(tranny.date.toDate())
+                    //         can_add = true;
+                    //     }
+                    //     else {
+                    //         continue;
+                    //     }
+                    // }
                     if (this.filtered['category_filter'] !== '') {
                         console.log(this.filtered['category_filter']);
                         if (this.filtered['category_filter'] === tranny.category) {
@@ -193,7 +194,6 @@ export default {
                     //         continue;
                     //     }
                     // }
-                    // TODO: for some reason when adding to array, it's coming out with different times on the table
                     if (can_add) {
                         console.log(this.owner_transactions[i].date.toDate());
                         this.filtered_list.push(this.owner_transactions[i]);

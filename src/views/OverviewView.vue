@@ -41,7 +41,7 @@
                   <tbody v-for="(trans, index) in limitTrans" :key="index">
                       <tr>
                           <td>
-                              <p>{{ trans.date.toDate().getDay() }}</p>
+                              <p>{{ trans.date.toDate().getDate() }}</p>
                   
                               <p>{{ getMonthAbv(trans.date.toDate().getMonth()) }}</p>
                           </td>
