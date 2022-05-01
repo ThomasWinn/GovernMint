@@ -15,6 +15,7 @@ import OverviewView from '../views/OverviewView'
 import BudgetView from '../views/BudgetView'
 import BudgetCategoryView from '../views/BudgetCategoryView'
 import SummaryView from '../views/SummaryView'
+import GoogleMapView from '../views/GoogleMapView'
 import {auth} from "@/firebaseConfig.js"
 Vue.use(VueRouter)
 
@@ -144,6 +145,15 @@ const routes = [
     path: '/summary',
     name: 'Summary',
     component: SummaryView,
+    props: true,
+    meta: {
+      requiresAuth: true
+    },
+  },
+  {
+    path: '/map',
+    name: 'Map',
+    component: GoogleMapView,
     props: true,
     meta: {
       requiresAuth: true
