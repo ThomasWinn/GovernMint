@@ -24,6 +24,10 @@
                     </span>
                     </tr>
                 </table>
+                <div v-if="hasTransactions !== false">
+                    <button class="uk-button uk-button-default" @click="downloadCSVData()">Export to CSV</button>
+                </div>
+                <div v-else></div>
 
                 {{ preprocess_filter() }}
                 <div class="left">
@@ -31,7 +35,6 @@
                         <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
                             <thead>
                                 <tr>
-                                    <th>Full Date</th>
                                     <th>Date</th>
                                     <th class="uk-table-expand">Description</th>
                                     <th>Category</th>
@@ -41,7 +44,6 @@
                             </thead>
                             <tbody v-for="(trans, index) in this.filtered_list" :key="index">
                                 <tr>
-                                    <td> {{trans.date.toDate()}}
                                     <td>
                                         <p>{{ trans.date.toDate().getDate() }}</p>
                             
@@ -101,7 +103,8 @@ export default {
                 2: [20, 50],
                 3: [50, 100],
                 4: [100, 9999999999]
-            }
+            },
+            hasTransactions: false
         }
     },
     firestore: function() {
@@ -161,12 +164,8 @@ export default {
             if (!this.changed && this.owner_transactions.length > 0) {
                 console.log('chilling');
                 this.changed = true;
-                // id the nulls
-
-                // THIS NEEDS TO BE UNCOMMENTED FOR time_filter
                 let todays_date = new Date();
                 for (let i = 0; i < this.owner_transactions.length; i++ ) {
-                    // how am i going to account for nulls?
                     let tranny = this.owner_transactions[i];
                     let can_add = false;
                     if (this.filtered['time_filter'] !== '') {
@@ -201,10 +200,8 @@ export default {
                             continue;
                         }
                     }
-                    // TODO: HOW DO I CHECK FOR NULL VALUES
                     if (this.filtered['money_filter'] !== '') {
                         var filter_money_str = this.filtered['money_filter']
-                        // console.log(filter_money_str);
                         var money_label = parseInt(filter_money_str.substring(0, filter_money_str.indexOf(')')))
                         if (this.money_bounding_dicky[money_label][0] < tranny.amount && tranny.amount <= this.money_bounding_dicky[money_label][1]) {
                             can_add = true;
@@ -227,6 +224,9 @@ export default {
             else {
                 console.log('woof woof');
             }
+            if (this.filtered_list.length > 0) {
+                this.hasTransactions = true;
+            }
         },
         getFilterOptions: function() {
             console.log("Jefftest")
@@ -247,7 +247,29 @@ export default {
         },
         goToAllT: function() {
             this.$router.push({name: "AllTransactions"})
-        }
+        },
+        // https://stackoverflow.com/questions/58292771/downloading-a-csv-of-file-using-vue-and-js
+        downloadCSVData: function() {
+            let csv = 'Date, Description, Location, Category, Payment Type, Amount\n';
+            for (let i = 0; i < this.filtered_list.length; i++) {
+                // let thisDate = new Date(this.filtered_list[i].date);
+
+                // console.log(this.filtered_list[i].date.toDate());
+                // csv += thisDate.toLocaleDateString('en-US') + ',';
+                csv += this.filtered_list[i].date.toDate() + ',';
+                csv += this.filtered_list[i].description.replace(/,/g, '') + ',';
+                csv += this.filtered_list[i].location.replace(/,/g, '') + ',';
+                csv += this.filtered_list[i].category.replace(/,/g, '') + ',';
+                csv += this.filtered_list[i].paymentType + ',';
+                csv += '$' + this.filtered_list[i].amount ;
+                csv += '\n';
+            }
+            const anchor = document.createElement('a');
+            anchor.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+            anchor.target = '_blank';
+            anchor.download = 'MyFilteredTransactions.csv';
+            anchor.click();
+        },
     },
     computed: {
         limitTrans: function() {

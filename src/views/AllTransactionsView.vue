@@ -4,8 +4,9 @@
             loading
         </div>
         <div v-else>
-            <h3> Filter <button @click="showFilters()">Expand Me!</button></h3>
+            <button @click="showFilters()" class="uk-button uk-button-default">Click to Expand Filtering</button>
             <div v-if="toShow">
+                <br>
                 <form class="uk-form-horizontal uk-margin-large">
                     <div class="uk-margin">
                         <label class="uk-form-label" for="form-horizontal-select">How Long Ago?</label>
@@ -67,10 +68,10 @@
                                 <th>Date</th>
                                 <th class="uk-table-expand">Description</th>
                                 <th>Category</th>
+                                <th>Payment Type</th>
                                 <th>Amount</th>
                             </tr>
                         </thead>
-                        <!-- TODO: FILTERING LOGIC HERE -->
                         <tbody v-for="(trans, index) in limitTrans" :key="index">
                             <tr>
                                 <td>
@@ -82,6 +83,7 @@
                                     <router-link :to="{name:'Transaction Detail', params:{transactionId:trans.id}}"> {{trans.description}}</router-link>
                                 </td>
                                 <td>{{ trans.category }}</td>
+                                <td>{{ trans.paymentType }}</td>
                                 <td>${{ trans.amount }}</td>
                             </tr>
                         </tbody>

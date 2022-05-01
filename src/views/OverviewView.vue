@@ -22,8 +22,6 @@
           <progress v-else class="uk-progress progress-red" style="border: 2px solid black" :value="remaining" :max="profile[0].balance"></progress>
         </div>
       </div>
-      <!-- TODO: Currently stuck on filter applying -->
-      <!-- TODO: Filtering brings us to different page without showing remaining balance -->
       <br>
       <h1 class="uk-heading-line uk-text-center"><span>Recent Transactions</span></h1>
       <button class="uk-button uk-button-default" @click="downloadCSVData()">Export to CSV</button>
@@ -35,6 +33,7 @@
                           <th>Date</th>
                           <th class="uk-table-expand">Description</th>
                           <th>Category</th>
+                          <th>Payment Type</th>
                           <th>Amount</th>
                       </tr>
                   </thead>
@@ -49,6 +48,7 @@
                               <router-link :to="{name:'Transaction Detail', params:{transactionId:trans.id}}"> {{trans.description}} </router-link>
                           </td>
                           <td>{{ trans.category }}</td>
+                          <td>{{ trans.paymentType }}</td>
                           <td>${{ trans.amount }}</td>
                       </tr>
                   </tbody>
@@ -104,11 +104,9 @@ export default {
     },
     // https://stackoverflow.com/questions/58292771/downloading-a-csv-of-file-using-vue-and-js
     downloadCSVData: function() {
-      // location needs to be stripped of commas same with every other string
-      // I believe we dont need to do payment type since it's predefined already
       let csv = 'Date, Description, Location, Category, Payment Type, Amount\n';
       for (let i = 0; i < this.owner_transactions.length; i++) {
-        csv += this.owner_transactions[i].date + ',';
+        csv += this.owner_transactions[i].date.toDate() + ',';
         csv += this.owner_transactions[i].description.replace(/,/g, '') + ',';
         csv += this.owner_transactions[i].location.replace(/,/g, '') + ',';
         csv += this.owner_transactions[i].category.replace(/,/g, '') + ',';
