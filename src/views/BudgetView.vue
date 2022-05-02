@@ -11,7 +11,7 @@
         <!-- <input class="uk-input uk-form-width-medium" v-model="newCategory" id="form-stacked-text" type="text"> <currency-input ref="amount" class="uk-input uk-form-width-medium" id="form-amount" onClick="this.select();" v-model="newLimit" :options="{ currency: 'USD' }" /> <vk-button @click="addNewCategory">+</vk-button> <br> <br> -->
 
         <ul v-if="spendingCategories !== false">
-        <input class="uk-input uk-form-width-medium" v-model="newCategory" id="form-stacked-text" type="text"> <currency-input ref="amount" class="uk-input uk-form-width-medium" id="form-amount" onClick="this.select();" v-model="newLimit" :options="{ currency: 'USD' }" /> <vk-button @click="addNewCategory">+</vk-button> <br> <br>
+        <input class="uk-input uk-form-width-medium" v-model="newCategory" id="form-stacked-text" type="text" placeholder="Spending Category"> <currency-input ref="amount" class="uk-input uk-form-width-medium" id="form-amount" onClick="this.select();" v-model="newLimit" :options="{ currency: 'USD' }" /> <vk-button @click="addNewCategory">+</vk-button> <br> <br>
         <li v-for="category in spendingCategories" :key="category.id">
             <div class="uk-flex">
                     <router-link class="uk-card-small uk-card-default uk-card-body uk-margin-left uk-width-3-4@m uk-background-primary uk-light uk-padding uk-panel" style="text-decoration: none; text-align: right;; color: inherit;" :to="{ name: 'oneCategory', params: { id: category.id, category: category.category } }">
@@ -123,5 +123,7 @@ export default {
 <style scoped>
 ul {
   list-style-type: none; /* Remove bullets */
+  display: inline-block;
+  text-align: left; 
 }
 </style>
