@@ -4,7 +4,12 @@
             loading
         </div>
         <div v-else>
-            <button @click="showFilters()" class="uk-button uk-button-default">Click to Expand Filtering</button>
+            <br>
+
+            <br>
+            <h1 class="uk-heading-line uk-text-center"><span>All Transactions</span></h1>
+            <button class="uk-button uk-button-default" @click="downloadCSVData()">Export to CSV</button>
+                        <button @click="showFilters()" class="uk-button uk-button-default">Click to Expand Filtering</button>
             <div v-if="toShow">
                 <br>
                 <form class="uk-form-horizontal uk-margin-large">
@@ -58,9 +63,6 @@
             <button @click="filterSearch()" class="uk-button uk-button-primary">Filter</button>
                 
             </div>
-            <br>
-            <h1 class="uk-heading-line uk-text-center"><span>All Transactions</span></h1>
-            <button class="uk-button uk-button-default" @click="downloadCSVData()">Export to CSV</button>
             <div class="left">
                 <div class="uk-overflow-auto">
                     <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">

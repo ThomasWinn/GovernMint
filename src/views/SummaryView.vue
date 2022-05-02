@@ -3,6 +3,7 @@
         <h1 style = "text-align: center" class = "uk-heading-xlarge">Transactions must be added to view summary</h1>
     </div>
     <div v-else style = "text-align: center">
+        <br>
         <span class="uk-label" style = "text-align: center" >Select a graph type</span>
         <select class = "uk-select" style = "text-align-last:center" id="graph" name="graph" @change = "onChange($event)">
             <option selected value="Pie" >Pie</option>

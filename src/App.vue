@@ -120,7 +120,8 @@ body {
     display: block;
     text-decoration: none;
     color: white;
-    padding: 1rem;
+    padding: 2rem;
+    /* margin: 0; */
 }
 
 .navbar-links li:hover {
@@ -143,6 +144,10 @@ body {
     width: 100%;
     background-color: white;
     border-radius: 10px;
+}
+
+.nav ul {
+  margin: 0;
 }
 
 @media (max-width: 800px) {
