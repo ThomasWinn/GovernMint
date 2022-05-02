@@ -1,10 +1,10 @@
 <template>
   <div class="bod" >
-    <div class="center very-center"  >
-
+    <div class="very-center">
       <p style = "max-width: 100%; font-size:8vw"> Govern<span style = "max-width: 100%; font-size:8vw; color: rgba(156,237,225,255)">Mint</span></p>
-
-      <login-button/>
+      <div style="text-align:center">
+        <login-button/>
+      </div>
       <br>
       <br>
       <add-to-home-btn></add-to-home-btn>
