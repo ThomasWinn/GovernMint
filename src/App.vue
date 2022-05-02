@@ -1,6 +1,6 @@
 <template>
   <div id = "app">
-    <nav class = "navbar">
+    <nav class = "navbar" v-if="!$route.meta.hideNavbar">
       <div class = "brand-title">Govern<span style = " color: rgba(156,237,225,255)">Mint</span><img width = 75 height = 75 src ="../public/icon-192x192.png"></div>
       <a href="#" class="toggle-button">
         <span class="bar"></span>
