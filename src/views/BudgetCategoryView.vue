@@ -32,9 +32,7 @@
                   <tbody v-for="(trans, index) in owner_transactions" :key="index">
                       <tr v-if="trans.category == category">
                           <td>
-                              <p>{{ trans.date.toDate().getDate() }}</p>
-                  
-                              <p>{{ getMonthAbv(trans.date.toDate().getMonth()) }}</p>
+                              <p>{{ trans.date.toDate().toDateString() }}</p>
                           </td>
                           <td class="uk-table-link">
                               <router-link :to="{name:'Transaction Detail', params:{transactionId:trans.id}}"> {{trans.description}} </router-link>
