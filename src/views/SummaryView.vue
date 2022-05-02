@@ -129,6 +129,7 @@ export default {
             }
         },
         owner_transactions(new_transaction, old_transaction) {
+            console.log(this.owner_transactions.length)
             this.loaded = false
             var category_totals = {}
             console.log(this.owner_transactions.length)
@@ -140,7 +141,7 @@ export default {
                     category_totals[this.owner_transactions[i].category] += this.owner_transactions[i].amount
                 }
             }
-            this.chartData = {labels: Object.keys(category_totals), datasets: [{data: Object.values(category_totals), backgroundColor: ['mintcream', 'lightsteelblue', '#00D8FF', 'yellow',"lightgreen","PaleTurquoise", "plum", "slategrey", "silver" ], fill: true, label: "User summary", }]}
+            this.chartData = {labels: Object.keys(category_totals), datasets: [{data: Object.values(category_totals), backgroundColor: [ 'lightsteelblue', '#00D8FF', 'yellow',"lightgreen","PaleTurquoise", "plum", "slategrey", "silver" ], fill: true, label: "User summary", }]}
             this.loaded = true
             var categories = Object.keys(category_totals).map(function(key) {
                 return [key, category_totals[key]]
