@@ -178,7 +178,7 @@ export default {
             });
             console.log("here")
             console.log(this.profile[0].balance)
-            this.budget_percent = spent / this.profile[0].balance * 100
+            this.budget_percent = (spent / this.profile[0].balance * 100).toFixed(2)
             console.log(this.budget_percent)
         }
     },
