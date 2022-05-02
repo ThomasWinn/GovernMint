@@ -40,9 +40,7 @@
                   <tbody v-for="(trans, index) in limitTrans" :key="index">
                       <tr>
                           <td>
-                              <p>{{ trans.date.toDate().getDate() }}</p>
-                  
-                              <p>{{ getMonthAbv(trans.date.toDate().getMonth()) }}</p>
+                              <p>{{ trans.date.toDate().toDateString() }}</p>
                           </td>
                           <td class="uk-table-link">
                               <router-link :to="{name:'Transaction Detail', params:{transactionId:trans.id}}"> {{trans.description}} </router-link>
@@ -162,6 +160,9 @@ export default {
 </script>
 
 <style scoped>
+.left {
+  text-align: left;
+}
 .uk-progress.progress-green::-webkit-progress-value {
   background-color: Green ;
 }

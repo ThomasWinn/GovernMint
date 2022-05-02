@@ -45,9 +45,7 @@
                             <tbody v-for="(trans, index) in this.filtered_list" :key="index">
                                 <tr>
                                     <td>
-                                        <p>{{ trans.date.toDate().getDate() }}</p>
-                            
-                                        <p>{{ getMonthAbv(trans.date.toDate().getMonth()) }}</p>
+                                        <p>{{ trans.date.toDate().toDateString() }}</p>
                                     </td>
                                     <td class="uk-table-link">
                                         <router-link :to="{name:'Transaction Detail', params:{transactionId:trans.id}}"> {{trans.description}} </router-link>
@@ -114,10 +112,6 @@ export default {
         }
     },
     methods: {
-        getMonthAbv: function(month_num) {
-            var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-            return month[month_num];
-        },
         showMore: function() {
             console.log('Old Limit: ' + this.limit + ' -> new limit: ' + this.limit + 3);
             this.limit += 3;
@@ -283,5 +277,8 @@ export default {
 table {
   margin-left: auto;
   margin-right: auto;
+}
+.left {
+  text-align: left;
 }
 </style>
