@@ -162,6 +162,9 @@ export default {
 </script>
 
 <style scoped>
+.left {
+  text-align: left;
+}
 .uk-progress.progress-green::-webkit-progress-value {
   background-color: Green ;
 }

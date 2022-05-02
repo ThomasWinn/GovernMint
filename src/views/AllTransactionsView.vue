@@ -215,6 +215,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.left {
+  text-align: left;
+}
 </style>

@@ -284,4 +284,7 @@ table {
   margin-left: auto;
   margin-right: auto;
 }
+.left {
+  text-align: left;
+}
 </style>
