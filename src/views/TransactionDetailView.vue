@@ -45,8 +45,22 @@
                         </vue-google-autocomplete>
                     </div>
                 </div>
-                <vk-button class="uk-margin-right" type="primary" @click="saveTransaction">Save</vk-button>
-                <vk-button type="primary" @click="saveAndClose">Save and Close</vk-button>
+                <!-- <vk-button class="uk-margin-right" type="primary" @click="saveTransaction">Save</vk-button>
+                <vk-button type="primary" @click="saveAndClose">Save and Close</vk-button> -->
+                <vk-button-group ref="group">
+                    <vk-button  type="primary" @click="saveTransaction">Save</vk-button>
+                    <div class="uk-inline">
+                        <vk-button type="primary">
+                            <vk-icon icon="triangle-down"></vk-icon>
+                        </vk-button>
+                        <vk-dropdown mode="click" boundary="group" boundary-align>
+                        <vk-nav-dropdown>
+                            <vk-nav-item @click="saveAndClose" title="Save &amp; Close" active></vk-nav-item>
+                        </vk-nav-dropdown>
+                        </vk-dropdown>
+                    </div>
+                </vk-button-group>
+                <vk-button class="uk-margin-left" type="danger" @click="deleteTransaction">Delete</vk-button>
             </form>
             <br>
             <br>
@@ -133,8 +147,12 @@ export default {
         },
         saveAndClose: function() {
             if (this.saveTransaction()) {
-                this.$router.push('/overview')
+                this.$router.go(-1)
             }
+        },
+        deleteTransaction: function() {
+            db.collection("transactions").doc(this.transactionId).delete()
+            this.$router.go(-1)
         },
         getCoordinates: function(addressData, placeResultData) {
             this.location = placeResultData.formatted_address
