@@ -5,19 +5,25 @@
         <div class="uk-container uk-margin-top">
             <form>
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="form-date">Date:</label>
+                    <label class="uk-form-label" for="form-date">Date:
+                        <span style="color:red"><strong>*</strong></span>
+                    </label>
                     <div class="uk-form-controls">
                         <date-picker v-model="date" id="form-date"/>
                     </div>
                 </div>
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="form-stacked-text">Description:</label>
+                    <label class="uk-form-label" for="form-stacked-text">Description:
+                        <span style="color:red"><strong>*</strong></span>
+                    </label>
                     <div class="uk-form-controls">
                         <input class="uk-input uk-form-width-medium" v-model="description" id="form-stacked-text" type="text" />
                     </div>
                 </div>
                 <div class="uk-margin">
-                    <label class="uk-form-label uk-margin-right" for="form-category">Select Category:</label>
+                    <label class="uk-form-label uk-margin-right" for="form-category">Select Category:
+                        <span style="color:red"><strong>*</strong></span>
+                    </label>
                     <div class="uk-form-controls">
                         <select v-model="category" class="uk-select uk-form-width-medium" id="form-category">
                             <option v-for="category in categories" :key="category.id">{{ category.category }}</option>
@@ -25,7 +31,9 @@
                     </div>
                 </div>
                 <div class="uk-margin">
-                    <label class="uk-form-label uk-margin-right" for="form-payment-type">Select Payment Type:</label>
+                    <label class="uk-form-label uk-margin-right" for="form-payment-type">Select Payment Type:
+                        <span style="color:red"><strong>*</strong></span>
+                    </label>
                     <div class="uk-form-controls">
                         <select v-model="paymentType" class="uk-select uk-form-width-medium" id="form-payment-type">
                             <option v-for="paymentType in paymentTypes" :key="paymentType.id">{{ paymentType.name }}</option>
@@ -33,13 +41,17 @@
                     </div>
                 </div>
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="form-amount">Total Amount:</label>
+                    <label class="uk-form-label" for="form-amount">Total Amount:
+                        <span style="color:red"><strong>*</strong></span>
+                    </label>
                     <div class="uk-form-controls">
                         <currency-input ref="amount" class="uk-input uk-form-width-medium" id="form-amount" v-model="amount" :options="{ currency: 'USD' }" />
                     </div>
                 </div>
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="form-location">Location:</label>
+                    <label class="uk-form-label" for="form-location">Location:
+                        <span style="color:red"><strong>*</strong></span>
+                    </label>
                     <div class="uk-form-controls">
                         <vue-google-autocomplete ref="location" 
                             v-model="location" 

@@ -18,7 +18,7 @@
                         <p class="uk-h4">{{category.category}}</p>  
                     </router-link> 
                 <div class="uk-card-small uk-card-default uk-card-body uk-margin-left uk-width-1-4@m uk-background-muted uk-padding uk-panel">
-                    <p class="uk-h4">  ${{category.limit}} </p>
+                    <p class="uk-h4">  $ <editable-span :text="category.limit" @edited="updateLimit($event, category)" /> </p>
                 </div>
             </div>
             <p></p>
@@ -35,10 +35,10 @@
 import { db, auth } from '@/firebaseConfig'
 
 import CurrencyInput from '../components/CurrencyInput.vue'
+import EditableSpan from '@/components/EditableSpan.vue'
 
-// import firebase from "firebase/app";
 export default {
-    components: { CurrencyInput },
+    components: { CurrencyInput, EditableSpan },
     data: function() {
         return {
             spendingCategories: false,
@@ -46,7 +46,8 @@ export default {
             newCategory: "",
             newLimit: 0,
             messages: [],
-            totalBudget: 0
+            totalBudget: 0,
+            profile: false
         }
     },
     methods: {
@@ -94,6 +95,11 @@ export default {
             db.collection("profile").doc(this.profile[0].id).update({balance: 500})
             this.messages.push({ message: 'Default Spending Categories Successfully Added', status: 'success', timeout: 3000 })
             return true
+        },
+        updateLimit: function(updatedLimit, category) {
+            let changeTotal = updatedLimit - category.limit
+            db.collection("spendingCategories").doc(category.id).update({limit: parseInt(updatedLimit)});
+            db.collection("profile").doc(this.profile[0].id).update({balance: this.profile[0].balance + changeTotal})
         }
     },
     computed: {
@@ -107,8 +113,8 @@ export default {
     },
     firestore: function() {
         return {
-            spendingCategories: db.collection("spendingCategories").where('user', '==', auth.currentUser.uid).orderBy("limit", "desc"),
-            profile: db.collection("profile").where("owner", "==", auth.currentUser.uid)
+            spendingCategories: db.collection("spendingCategories").where('user', '==', auth.currentUser.uid).orderBy("category"),
+            profile: db.collection('profile').where('owner', '==', auth.currentUser.uid)
         }
     }
 }
