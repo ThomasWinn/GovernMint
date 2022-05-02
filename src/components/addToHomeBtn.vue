@@ -3,7 +3,7 @@
         <button
         v-if="deferredPrompt"
         ref="addBtn"
-        class="add-button"
+        class="uk-button uk-button-default add-button"
         @click="clickCallback"
         >
         Add to HomeScreen!
@@ -18,7 +18,7 @@ export default {
     deferredPrompt: null,
   }),
   mounted() {
-    this.captureEvent()
+    this.captureEvent();
   },
   methods: {
     captureEvent() {
