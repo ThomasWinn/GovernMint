@@ -32,7 +32,7 @@
                   <tbody v-for="(trans, index) in owner_transactions" :key="index">
                       <tr v-if="trans.category == category">
                           <td>
-                              <p>{{ trans.date.toDate().getDay() }}</p>
+                              <p>{{ trans.date.toDate().getDate() }}</p>
                   
                               <p>{{ getMonthAbv(trans.date.toDate().getMonth()) }}</p>
                           </td>
