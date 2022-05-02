@@ -1,12 +1,9 @@
 <template>
-  <div class="bod">
-    <div class="center very-center">
+  <div class="bod" >
+    <div class="center very-center"  >
 
-      <p>Governmint</p>
-      <span>Where you can track all your spending habits</span>
-      <br>
-      <br>
-      <br>
+      <p style = "max-width: 100%; font-size:8vw"> Govern<span style = "max-width: 100%; font-size:8vw; color: rgba(156,237,225,255)">Mint</span></p>
+
       <login-button/>
     </div>
   </div>
@@ -34,13 +31,16 @@ export default {
 <style scoped>
 p {
   font-size: 10em;
-  font-family: cursive;
-  color: rgba(156,237,225,255);
+  font-family: 'Helvetica';
+  color: 'black';
+}
+body{
+   background: orange;
 }
 
 span {
   font-size: 2em;
-  font-family: 'Times New Roman';
+  font-family: 'Helvetica';
 }
 
 .very-center {

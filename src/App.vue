@@ -1,21 +1,30 @@
 <template>
-  <div id="app">
-    <nav class="uk-navbar-container" uk-navbar v-if="!$route.meta.hideNavbar">
-      <div class="uk-navbar-center">
-          <ul class="uk-navbar-nav">
-              <li class="uk-active"><router-link to="/overview">Overview</router-link></li>
-              <li class="uk-active"><router-link to="/allTransactions">All Transaction</router-link></li>
-              <li class="uk-active"><router-link to="/monthlyBudget">Monthly Budget</router-link></li>
-              <li class="uk-active"><router-link to="/add-transaction">Add Transaction</router-link></li>
-              <li class="uk-active"><router-link to="/summary">Summary</router-link></li>
-              <li><a href="#"><login-button/></a></li>
-          </ul>
-
+  <div id = "app">
+    <nav class = "navbar">
+      <div class = "brand-title">Govern<span style = " color: rgba(156,237,225,255)">Mint</span></div>
+      <a href="#" class="toggle-button">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </a>
+      <div class = "navbar-links">
+        <ul>
+            <li class="uk-active"><router-link to="/overview">Overview</router-link></li>
+            <li class="uk-active"><router-link to="/allTransactions">All Transaction</router-link></li>
+            <li class="uk-active"><router-link to="/monthlyBudget">Monthly Budget</router-link></li>
+            <li class="uk-active"><router-link to="/add-transaction">Add Transaction</router-link></li>
+            <li class="uk-active"><router-link to="/summary">Summary</router-link></li>
+            <li><a href="#"><login-button/></a></li>
+        </ul>
       </div>
     </nav>
     <router-view/>
   </div>
 </template>
+
+
+
+
 
 <script>
 
@@ -37,11 +46,19 @@ export default {
     }).catch(() => {
       this.$router.push("/")
     })
+  },
+  mounted() {
+    const toggleButton = document.getElementsByClassName('toggle-button')[0]
+    const navbarLinks = document.getElementsByClassName('navbar-links')[0]
+
+    toggleButton.addEventListener('click', () => {
+      navbarLinks.classList.toggle('active')
+    })
   }
 }
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -62,18 +79,103 @@ export default {
     list-style-type: '✅';
 }
 
-nav {
-  text-align: center;
-  padding: 30px;
+* {
+    box-sizing: border-box;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+body {
+    margin: 0;
+    padding: 0;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+.navbar {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+}
+
+.brand-title {
+    font-size: 1.5rem;
+    margin: .5rem;
+}
+
+.navbar-links {
+    height: 100%;
+}
+
+.navbar-links ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-links li {
+    list-style: none;
+}
+
+.navbar-links li a {
+    display: block;
+    text-decoration: none;
+    color: white;
+    padding: 1rem;
+}
+
+.navbar-links li:hover {
+    background-color: #555;
+}
+
+.toggle-button {
+    position: absolute;
+    top: .75rem;
+    right: 1rem;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+}
+
+.toggle-button .bar {
+    height: 3px;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+}
+
+@media (max-width: 800px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .toggle-button {
+        display: flex;
+    }
+
+    .navbar-links {
+        display: none;
+        width: 100%;
+    }
+
+    .navbar-links ul {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .navbar-links ul li {
+        text-align: center;
+    }
+
+    .navbar-links ul li a {
+        padding: .5rem 1rem;
+    }
+
+    .navbar-links.active {
+        display: flex;
+    }
 }
 
 .notification-text {
@@ -87,8 +189,5 @@ nav a.router-link-exact-active {
   max-width: 30em;
 }
 
-ul {
-  display: inline-block; 
-	text-align: left; 
-}
+
 </style>

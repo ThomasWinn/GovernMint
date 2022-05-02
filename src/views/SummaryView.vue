@@ -1,58 +1,61 @@
 <template>
-    <div style = "text-align: center">
-    <span class="uk-label" style = "text-align: center" >Select a graph type</span>
+    <div v-if = "owner_transactions.length == 0">
+        <h1 style = "text-align: center" class = "uk-heading-xlarge">Transactions must be added to view summary</h1>
+    </div>
+    <div v-else style = "text-align: center">
+        <span class="uk-label" style = "text-align: center" >Select a graph type</span>
         <select class = "uk-select" style = "text-align-last:center" id="graph" name="graph" @change = "onChange($event)">
             <option selected value="Pie" >Pie</option>
             <option value="Bar">Bar</option>
             <option value="Radar">Radar</option>
         </select>
 
-    <RadarChart v-if = "loaded && loadRadar" :chart-data="chartData" :chart-options="chartOptions" />
-    <BarChart v-if = "loaded && loadBar" :chart-data="chartData" :chart-options="chartOptions" />
-    <PieChart v-if = "loaded && loadPie" :chart-data="chartData" :chart-options="chartOptions" />
+        <RadarChart v-if = "loaded && loadRadar" :chart-data="chartData" :chart-options="chartOptions" />
+        <BarChart v-if = "loaded && loadBar" :chart-data="chartData" :chart-options="chartOptions" />
+        <PieChart v-if = "loaded && loadPie" :chart-data="chartData" :chart-options="chartOptions" />
 
-    <h1 class="uk-heading-bullet"> Key Summary </h1>
-    <ul class="uk-list uk-list-divider">
-        <li>Your top 3 spending categories are {{sorted_categories[0][0]}}, {{sorted_categories[1][0]}}, and {{sorted_categories[2][0]}}</li>
-        <li v-if ="budget_percent != 0">You have spent {{budget_percent}}% of your budget.</li>
-        <li>Your most used payment type is {{sorted_payTypes[0][0]}} </li>
-    </ul>
-    <div>
-            <br>
-            <h2>Click a Marker to View Details</h2>
-            <GmapAutocomplete
-                @place_changed='setPlace'
-            />
-        </div>
-        <br>
-        <vk-grid>
-            <div class="uk-width-1-2@m">
-                <GmapMap
-                    :center="center"
-                    :zoom='12'
-                    style='width:100%;  height: 500px;'
-                >
-                <GmapMarker
-                    :key="index"
-                    v-for="(m, index) in markers"
-                    :position="m.position"
-                    @click="viewMarker(m)"
+        <h1 class="uk-heading-bullet"> Key Summary </h1>
+        <ul class="uk-list uk-list-divider">
+            <li>Your top 3 spending categories are {{sorted_categories[0][0]}}, {{sorted_categories[1][0]}}, and {{sorted_categories[2][0]}}</li>
+            <li v-if ="budget_percent != 0">You have spent {{budget_percent}}% of your budget.</li>
+            <li>Your most used payment type is {{sorted_payTypes[0][0]}} </li>
+        </ul>
+        <div>
+                <br>
+                <h2>Click a Marker to View Details</h2>
+                <GmapAutocomplete
+                    @place_changed='setPlace'
                 />
-                </GmapMap>
             </div>
-            <div class="uk-width-1-2@m">
-                <h3 class = "uk-text-bold"> Transaction Details: </h3>
-                <div v-if="currentMarker" class = "uk-text-bottom">
-                    <p> Date: {{currentMarker.date}} </p>
-                    <p> Description: {{currentMarker.description}} </p>
-                    <p> Amount: ${{currentMarker.amount}} </p>
-                    <p> Address: {{currentMarker.address}} </p>
-                    <p> Category: {{currentMarker.category}} </p>
-                    <p> Payment Type: {{currentMarker.paymentType}} </p>
-                    <router-link :to="{name:'Transaction Detail', params:{transactionId:currentMarker.id}}"> View More Details </router-link>
+            <br>
+            <vk-grid>
+                <div class="uk-width-1-2@m">
+                    <GmapMap
+                        :center="center"
+                        :zoom='12'
+                        style='width:100%;  height: 500px;'
+                    >
+                    <GmapMarker
+                        :key="index"
+                        v-for="(m, index) in markers"
+                        :position="m.position"
+                        @click="viewMarker(m)"
+                    />
+                    </GmapMap>
                 </div>
-            </div>
-        </vk-grid>
+                <div class="uk-width-1-2@m">
+                    <h3 class = "uk-text-bold"> Transaction Details: </h3>
+                    <div v-if="currentMarker" class = "uk-text-bottom">
+                        <p> Date: {{currentMarker.date}} </p>
+                        <p> Description: {{currentMarker.description}} </p>
+                        <p> Amount: ${{currentMarker.amount}} </p>
+                        <p> Address: {{currentMarker.address}} </p>
+                        <p> Category: {{currentMarker.category}} </p>
+                        <p> Payment Type: {{currentMarker.paymentType}} </p>
+                        <router-link :to="{name:'Transaction Detail', params:{transactionId:currentMarker.id}}"> View More Details </router-link>
+                    </div>
+                </div>
+            </vk-grid>
     </div>
 </template>
 
