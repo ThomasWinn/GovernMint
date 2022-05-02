@@ -1,7 +1,7 @@
 <template>
   <div id = "app">
     <nav class = "navbar">
-      <div class = "brand-title">Govern<span style = " color: rgba(156,237,225,255)">Mint</span></div>
+      <div class = "brand-title">Govern<span style = " color: rgba(156,237,225,255)">Mint</span><img width = 75 height = 75 src ="../public/icon-192x192.png"></div>
       <a href="#" class="toggle-button">
         <span class="bar"></span>
         <span class="bar"></span>
