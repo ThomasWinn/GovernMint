@@ -4,10 +4,10 @@
       <p style = "max-width: 100%; font-size:8vw"> Govern<span style = "max-width: 100%; font-size:8vw; color: rgba(156,237,225,255)">Mint</span></p>
       <div style="text-align:center">
         <login-button/>
+        <br>
+        <br>
+        <add-to-home-btn></add-to-home-btn>
       </div>
-      <br>
-      <br>
-      <add-to-home-btn></add-to-home-btn>
     </div>
   </div>
 </template>

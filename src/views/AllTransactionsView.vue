@@ -14,7 +14,7 @@
                 <br>
                 <form class="uk-form-horizontal uk-margin-large">
                     <div class="uk-margin">
-                        <label class="uk-form-label" for="form-horizontal-select">How Long Ago?</label>
+                        <label class="uk-form-label" for="form-horizontal-select">Date Filter</label>
                         <div class="uk-form-controls">
                             <select v-model="chosen_time" class="uk-select" id="form-horizontal-select">
                                 <option v-for="(time, tindex) in this.time_ago" :key="tindex">
@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="uk-margin">
-                        <label class="uk-form-label" for="form-horizontal-select">Show Only What Category?</label>
+                        <label class="uk-form-label" for="form-horizontal-select">Category</label>
                         <div class="uk-form-controls">
                             <select v-model="chosen_category" class="uk-select" id="form-horizontal-select">
                                 <option v-for="(category, index) in this.unique_categories" :key="index">
@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="uk-margin">
-                        <label class="uk-form-label" for="form-horizontal-select">What Payment Type Was Used?</label>
+                        <label class="uk-form-label" for="form-horizontal-select">Payment Type</label>
                         <div class="uk-form-controls">
                             <select v-model="chosen_payment_type" class="uk-select" id="form-horizontal-select">
                                 <option v-for="(pType, pindex) in this.unique_payment_type" :key="pindex">
@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="uk-margin">
-                        <label class="uk-form-label" for="form-horizontal-select">Between What Amount?</label>
+                        <label class="uk-form-label" for="form-horizontal-select">Amount Range</label>
                         <div class="uk-form-controls">
                             <select v-model="chosen_higher_lower_bound" class="uk-select" id="form-horizontal-select">
                                 <option v-for="(aType, aindex) in this.amount_bound" :key="aindex">
