@@ -8,14 +8,18 @@
       <br>
       <br>
       <login-button/>
+      <br>
+      <br>
+      <add-to-home-btn>hello</add-to-home-btn>
     </div>
   </div>
 </template>
 
 <script>
 import LoginButton from '@/components/LoginButton.vue'
+import AddToHomeBtn from '@/components/addToHomeBtn.vue'
 export default {
-  components: { LoginButton },
+  components: { LoginButton, AddToHomeBtn },
   name: 'HomeView',
   data: function() {
     return {
