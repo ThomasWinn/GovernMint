@@ -4,9 +4,9 @@
       <vk-spinner></vk-spinner>
     </div>
     <div v-else>
-      <br><br>
+      <vk-notification status="success" :messages.sync="messages"></vk-notification>
       <h1> Monthly Spending Goal for {{category}} </h1>
-        <h2> $ <editable-span :text="categoryObj.limit" @edited="updateLimit" /> </h2>
+        <h2> $ <editable-span ref="newlimit" :text="categoryObj.limit" @edited="updateLimit" /> </h2>
       <div class="uk-flex">
         <div class="uk-card uk-card-default uk-card-body uk-margin-left uk-width-1-4@m uk-background-primary uk-light uk-padding uk-panel">
           <p class="uk-h4">Remaining Balance</p>
@@ -63,7 +63,8 @@ export default {
       profile: false,
       categoryObj: false,
       category_transactions: false,
-      changeTotal: 0
+      changeTotal: 0,
+      messages: []
     }
   },
   firestore: function() {
@@ -83,6 +84,9 @@ export default {
       this.changeTotal = updatedLimit - this.categoryObj.limit
       this.$firestoreRefs.categoryObj.update({limit: parseInt(updatedLimit)});
       db.collection("profile").doc(this.profile[0].id).update({balance: this.profile[0].balance + this.changeTotal})
+      // this.changeTotal = updatedLimit - this.categoryObj.limit
+      // this.$firestoreRefs.categoryObj.update({limit: parseInt(updatedLimit)});
+      // db.collection("profile").doc(this.profile[0].id).update({balance: this.profile[0].balance + this.changeTotal})
     }
   },
   computed: {
@@ -99,5 +103,8 @@ export default {
 </script>
 
 <style scoped>
-
+input {
+  font-size: 30px;
+  max-width: 100px;
+}
 </style>

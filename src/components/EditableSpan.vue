@@ -1,7 +1,6 @@
 <template>
   <span v-if="!editMode" @click="clickIn"> {{text}} </span>
-  <!-- <input class="uk-input uk-form-width-medium" v-else @blur="clickOut" v-model="inputContent" ref="focusfield" /> -->
-  <input v-else @blur="clickOut" v-model="inputContent" ref="focusfield" />
+  <input v-else type="number" @blur="clickOut" v-model="inputContent" ref="focusfield" />
 
 </template>
 
@@ -34,8 +33,8 @@ export default {
 
 <style scoped>
 input {
-  font-size: 30px;
-  max-width: 100px;
+  font-size: 18px;
+  max-width: 65px;
 }
 
 </style>
