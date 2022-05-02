@@ -13,7 +13,7 @@
                 <GmapMap
                     :center='center'
                     :zoom='12'
-                    style='width:100%;  height: 500px;'
+                    style='width:500px;  height: 500px;'
                 >
                 <GmapMarker
                     :key="index"
