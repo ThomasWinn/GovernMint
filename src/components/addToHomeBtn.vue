@@ -3,7 +3,7 @@
         <button
         v-if="deferredPrompt"
         ref="addBtn"
-        class="add-button"
+        class="uk-button uk-button-default add-button"
         @click="clickCallback"
         >
         Add
