@@ -3,10 +3,10 @@
         <button
         v-if="deferredPrompt"
         ref="addBtn"
-        class="uk-button uk-button-default add-button"
+        class="add-button"
         @click="clickCallback"
         >
-        Add
+        Add to HomeScreen!
         </button>
   </div>
 </template>

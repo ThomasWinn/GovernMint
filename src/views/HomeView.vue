@@ -7,7 +7,7 @@
       <login-button/>
       <br>
       <br>
-      <add-to-home-btn>hello</add-to-home-btn>
+      <add-to-home-btn></add-to-home-btn>
     </div>
   </div>
 </template>
