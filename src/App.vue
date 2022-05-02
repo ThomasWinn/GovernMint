@@ -10,7 +10,7 @@
       <div class = "navbar-links">
         <ul>
             <li class="uk-active"><router-link to="/overview">Overview</router-link></li>
-            <li class="uk-active"><router-link to="/allTransactions">All Transaction</router-link></li>
+            <li class="uk-active"><router-link to="/allTransactions">View Transactions</router-link></li>
             <li class="uk-active"><router-link to="/monthlyBudget">Monthly Budget</router-link></li>
             <li class="uk-active"><router-link to="/add-transaction">Add Transaction</router-link></li>
             <li class="uk-active"><router-link to="/summary">Summary</router-link></li>
