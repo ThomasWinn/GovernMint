@@ -24,7 +24,6 @@
       </div>
       <br>
       <h1 class="uk-heading-line uk-text-center"><span>Recent Transactions</span></h1>
-      <button class="uk-button uk-button-default" @click="downloadCSVData()">Export to CSV</button>
       <div class="left">
         <div class="uk-overflow-auto">
               <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
@@ -93,7 +92,7 @@ export default {
     },
     showMore: function() {
       if (this.owner_transactions.length - 1 <= this.limit + 3) {
-          this.limit = this.owner_transactions.length - 1
+          this.limit = this.owner_transactions.length
           this.showSeeMore = false;
       }
       else {

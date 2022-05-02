@@ -52,8 +52,21 @@
                         </vue-google-autocomplete>
                     </div>
                 </div>
-                <vk-button class="uk-margin-right" type="primary" @click="saveAndNew">Save and New</vk-button>
-                <vk-button type="primary" @click="saveAndClose">Save and Close</vk-button>
+                <vk-button-group ref="group">
+                    <vk-button  type="primary" @click="saveAndNew">Save &amp; New</vk-button>
+                    <div class="uk-inline">
+                        <vk-button type="primary">
+                            <vk-icon icon="triangle-down"></vk-icon>
+                        </vk-button>
+                        <vk-dropdown mode="click" boundary="group" boundary-align>
+                            <vk-nav-dropdown>
+                                <vk-nav-item @click="saveAndClose" title="Save &amp; Close" active></vk-nav-item>
+                                <br>
+                                <vk-nav-item @click="saveAndView" title="Save &amp; View" active></vk-nav-item>
+                            </vk-nav-dropdown>
+                        </vk-dropdown>
+                    </div>
+                </vk-button-group>
             </form>
             <br>
             <br>
@@ -78,6 +91,7 @@ import DatePicker from 'v-calendar/lib/components/date-picker.umd';
 // https://www.npmjs.com/package/vue-google-autocomplete
 import VueGoogleAutocomplete from "vue-google-autocomplete";
 import firebase from "firebase/app";
+
 export default {
     components: { CurrencyInput, DatePicker, VueGoogleAutocomplete },
     data: function() {
@@ -92,7 +106,8 @@ export default {
             latitude: null,
             longitude: null,
             amount: 0,
-            messages: []
+            messages: [],
+            new_id: null,
         }
     },
     firestore: function() {
@@ -118,7 +133,9 @@ export default {
                     amount: this.amount,
                     owner: auth.currentUser.uid
                 })
-                db.collection('transactions').add({
+                let ref = db.collection('transactions').doc()
+                this.new_id = ref.id
+                ref.set({
                     date: this.date,
                     description: this.description,
                     category: this.category,
@@ -128,7 +145,6 @@ export default {
                     amount: this.amount,
                     owner: auth.currentUser.uid
                 })
-                this.messages.push({ message: 'Transaction Successfully Added', status: 'success', timeout: 3000 })
                 return true
             } else {
                 this.messages.push({ message: 'Transaction Failed: One or More Fields are Invalid', status: 'danger', timeout: 3000 })
@@ -155,16 +171,18 @@ export default {
                 this.$router.push('/overview')
             }
         },
+        saveAndView: function() {
+            if (this.saveTransaction()) {
+                this.$nextTick(() => {
+                    this.$router.push({name: "Transaction Detail", params: {transactionId: this.new_id}})
+                });
+            }
+        },
         getCoordinates: function(addressData, placeResultData) {
             this.location = placeResultData.formatted_address
             this.latitude = addressData.latitude
             this.longitude = addressData.longitude
-        },
-        // clearLocation: function() {
-        //     this.location = ""
-        //     this.latitude = null
-        //     this.longitude = null
-        // }
+        }
     }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <Pie
+  <Radar
     :chart-options="chartOptions"
     :chart-data="chartData"
     :chart-id="chartId"
@@ -13,19 +13,32 @@
 </template>
 
 <script>
-import { Pie } from 'vue-chartjs/legacy'
+import { Radar } from 'vue-chartjs/legacy'
+
 import {
   Chart as ChartJS,
   Title,
   Tooltip,
   Legend,
-  ArcElement,
-  CategoryScale
+  PointElement,
+  LineElement,
+  RadialLinearScale
 } from 'chart.js'
-ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale)
+
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  RadialLinearScale,
+  LineElement
+)
+
 export default {
-  name: 'PieChart',
-  components: { Pie },
+  name: 'RadarChart',
+  components: {
+    Radar
+  },
   props: {
     chartData: {
       type: Object
@@ -36,7 +49,7 @@ export default {
     },
     chartId: {
       type: String,
-      default: 'bar-chart'
+      default: 'radar-chart'
     },
     datasetIdKey: {
       type: String,
@@ -44,11 +57,11 @@ export default {
     },
     width: {
       type: Number,
-      default:700
+      default: 700
     },
     height: {
       type: Number,
-      default:700
+      default: 700
     },
     cssClasses: {
       default: '',
@@ -59,15 +72,9 @@ export default {
       default: () => {}
     },
     plugins: {
-      type: Object,
-      default: () => {}
+      type: Array,
+      default: () => []
     }
   },
-
-
 }
 </script>
-
-<style>
-
-</style>
