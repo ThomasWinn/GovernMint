@@ -6,11 +6,14 @@ CSCI 5117, Spring 2022, [assignment description](https://canvas.umn.edu/courses/
 
 * Team Name: Team 7
 * App Name: GovernMint
-* App Link: <https://TODO.firebaseapp.com/>
+* App Link: <https://team-7-project2.web.app>
 
 ### Students
 
 * Calvin Tran, tran0728
+* Thomas Nguyen, nguy3817
+* Jeffrey Jia, jiaxx215
+* Hughdan Liu, liux2789
 * ...
 
 
@@ -20,6 +23,7 @@ CSCI 5117, Spring 2022, [assignment description](https://canvas.umn.edu/courses/
 (one sentence per bullet, maximum 4 bullets):**
 
 * Utilizing vue-chart.js to display graphs on user transactions
+* I thought filtering for mulitple transactions was a hard thing to conceptually think about at first. ALSO Adding to CSV (On filtered transactions and all Transactions)
 
 Which (if any) device integration(s) does your app support?
 
@@ -27,7 +31,7 @@ Which (if any) device integration(s) does your app support?
 
 Which (if any) progressive web app feature(s) does your app support?
 
-* ...
+* Add to home screen
 
 
 
@@ -44,7 +48,7 @@ LINK: https://app.moqups.com/b9tnzztqTwDHFCUxe7F7oZUIwKNHVobo/view/page/ac999e6d
 
 **Is there anything special we need to know in order to effectively test your app? (optional):**
 
-* ...
+* Please spend some money online first so you can record your transaction on our app :D
 
 
 
@@ -63,10 +67,13 @@ along with a very brief caption:**
 Please do not document required libraries (e.g., Vue, Vuefire, Firebase).**
 
 * Library or service name: description of use
+* Chart JS - summary graphs
+* Google Maps API - geolocation features
+* UIkit and VUIKit - Styling
 * ...
 
 **If there's anything else you would like to disclose about how your project
 relied on external code, expertise, or anything else, please disclose that
 here:**
-
+* Lots of links are scattered throughout the code base to indicate credit or inspiration to where we got out logic.
 ...
