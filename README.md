@@ -57,8 +57,9 @@ LINK: https://app.moqups.com/b9tnzztqTwDHFCUxe7F7oZUIwKNHVobo/view/page/ac999e6d
 **[Add a screenshot of each key page](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository)
 along with a very brief caption:**
 
-![](![Uploading image.png…](![overview](https://user-images.githubusercontent.com/72582693/166564866-62ee5f00-39ff-400d-bc32-f1ca1c451801.JPG)
-))
+
+![overview](https://user-images.githubusercontent.com/72582693/166565000-97ffd0bb-d00e-4a1e-963e-3a124328dd0b.JPG)
+
 
 
 
