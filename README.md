@@ -4,13 +4,13 @@ CSCI 5117, Spring 2022, [assignment description](https://canvas.umn.edu/courses/
 
 ## App Info:
 
-* Team Name: TODO
-* App Name: TODO
+* Team Name: Team 7
+* App Name: GovernMint
 * App Link: <https://TODO.firebaseapp.com/>
 
 ### Students
 
-* First Last, x500@umn.edu
+* Calvin Tran, tran0728
 * ...
 
 
@@ -19,11 +19,11 @@ CSCI 5117, Spring 2022, [assignment description](https://canvas.umn.edu/courses/
 **Describe the most challenging features you implemented
 (one sentence per bullet, maximum 4 bullets):**
 
-* ...
+* Utilizing vue-chart.js to display graphs on user transactions
 
 Which (if any) device integration(s) does your app support?
 
-* ...
+* Geolocation
 
 Which (if any) progressive web app feature(s) does your app support?
 
