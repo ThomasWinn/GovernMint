@@ -14,7 +14,6 @@ CSCI 5117, Spring 2022, [assignment description](https://canvas.umn.edu/courses/
 * Thomas Nguyen, nguy3817
 * Jeffrey Jia, jiaxx215
 * Hughdan Liu, liux2789
-* ...
 
 
 ## Key Features
@@ -71,10 +70,8 @@ Please do not document required libraries (e.g., Vue, Vuefire, Firebase).**
 * Chart JS - summary graphs
 * Google Maps API - geolocation features
 * UIkit and VUIKit - Styling
-* ...
 
 **If there's anything else you would like to disclose about how your project
 relied on external code, expertise, or anything else, please disclose that
 here:**
 * Lots of links are scattered throughout the code base to indicate credit or inspiration to where we got out logic.
-...
