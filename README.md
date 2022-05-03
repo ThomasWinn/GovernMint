@@ -24,6 +24,7 @@ CSCI 5117, Spring 2022, [assignment description](https://canvas.umn.edu/courses/
 
 * Utilizing vue-chart.js to display graphs on user transactions
 * I thought filtering for mulitple transactions was a hard thing to conceptually think about at first. ALSO Adding to CSV (On filtered transactions and all Transactions)
+* Background calculation for total spending goal and remaining balence. 
 
 Which (if any) device integration(s) does your app support?
 
