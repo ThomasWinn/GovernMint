@@ -57,9 +57,24 @@ LINK: https://app.moqups.com/b9tnzztqTwDHFCUxe7F7oZUIwKNHVobo/view/page/ac999e6d
 **[Add a screenshot of each key page](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository)
 along with a very brief caption:**
 
-
+**Overview Page
 ![overview](https://user-images.githubusercontent.com/72582693/166565000-97ffd0bb-d00e-4a1e-963e-3a124328dd0b.JPG)
 
+**All Transactions Page
+
+![alltransactions](https://user-images.githubusercontent.com/72582693/166565192-744e5f19-00f0-4396-9831-00751282fdfc.JPG)
+
+**Monthly Budget Page
+
+![monthlybudget](https://user-images.githubusercontent.com/72582693/166565395-cf8ce8d8-a383-442f-ae0d-49f62605f12c.JPG)
+
+**Add Transaction Page
+
+![addTransaction](https://user-images.githubusercontent.com/72582693/166565576-1dc05a0f-56b3-4b17-bb7f-b99bbea9e413.JPG)
+
+**Summary Page
+
+![summarypage](https://user-images.githubusercontent.com/72582693/166565601-dc2bdd33-2c05-44a2-9299-81a0c0760bdb.JPG)
 
 
 
